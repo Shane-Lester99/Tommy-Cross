@@ -131,9 +131,16 @@ let allEnemies = [];
 let player = new Player();
 
 setInterval( function() {
-    console.log('interval');
-    const loc = Math.floor(Math.random() * 3)
-    const newEnemy = new Enemy(Enemy.chooseLocation(loc), Enemy.randomSpeed());
+    const loc = Enemy.chooseLocation(Math.floor(Math.random() * 3));
+    let speed = Enemy.randomSpeed();
+    allEnemies.forEach( function(currentEnemy) {
+        if (loc[1] === currentEnemy.y) {
+            while (speed > currentEnemy.speed) {
+                speed = Enemy.randomSpeed();
+            }
+        }
+    });
+    const newEnemy = new Enemy(loc, speed);
     allEnemies.push(newEnemy);
     allEnemies = allEnemies.filter(allEnemies => allEnemies.offScreen === false);
     console.log('number of objects on screen' + allEnemies.length);
