@@ -42,15 +42,15 @@ class Enemy {
         let location = [];
         // Bottom Square
         if (locNum === 0) {
-            location = [0,220];
+            location = [-50,220];
         } 
         // Middle Square
         else if (locNum === 1) {
-            location = [0,140];
+            location = [-50,140];
         }
         // Top Square
         else {
-            location = [0,60];
+            location = [-50,60];
         }
         return location;
     };
@@ -130,20 +130,25 @@ class Player {
 let allEnemies = []; 
 let player = new Player();
 
+// We should change the interval to make it easier to harder. default at 1 second spawns 
+//(about 4 to 6 enemies) each time
 setInterval( function() {
     const loc = Enemy.chooseLocation(Math.floor(Math.random() * 3));
     let speed = Enemy.randomSpeed();
-    allEnemies.forEach( function(currentEnemy) {
-        if (loc[1] === currentEnemy.y) {
-            while (speed > currentEnemy.speed) {
-                speed = Enemy.randomSpeed();
-            }
-        }
-    });
+
+    // Makes it so that enemies dont bang into each other
+
+    // allEnemies.forEach( function(currentEnemy) {
+    //     if (loc[1] === currentEnemy.y) {
+    //         while (speed > currentEnemy.speed) {
+    //             speed = Enemy.randomSpeed();
+    //         }
+    //     }
+    // });
     const newEnemy = new Enemy(loc, speed);
     allEnemies.push(newEnemy);
     allEnemies = allEnemies.filter(allEnemies => allEnemies.offScreen === false);
-    console.log('number of objects on screen' + allEnemies.length);
+    //console.log('number of objects on screen' + allEnemies.length);
 }, 1000);
 
 
