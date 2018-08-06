@@ -1,6 +1,6 @@
 // Enemies our player must avoid
 class Enemy {
-    constructor(theLocation = [0,220] , theSpeed = 1) {
+    constructor(theLocation = [0,220] , theSpeed = 50) {
         // Variables applied to each of our instances go here,
         // we've provided one for you to get started
 
@@ -14,6 +14,8 @@ class Enemy {
 
         this.speed = theSpeed;
 
+        this.offScreen = false;
+
     }
 
     // Update the enemy's position, required method for game
@@ -22,6 +24,13 @@ class Enemy {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+        if (this.x <= 505) {
+            this.x += dt * this.speed;
+        }
+        else {
+            this.offScreen = true;
+        }
+
     };
 
     // Draw the enemy on the screen, required method for game
@@ -29,7 +38,7 @@ class Enemy {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 
-    static getLocations(locNum) {
+    static chooseLocation(locNum) {
         let location = [];
         // Bottom Square
         if (locNum === 0) {
@@ -44,6 +53,26 @@ class Enemy {
             location = [0,60];
         }
         return location;
+    };
+
+    static randomSpeed() {
+    //     // if (speedLvl === 0) {
+
+    //     // }
+    //     // else if (speedLvl === 1) {
+
+    //     // }
+    //     // else if (speedLvl === 2) {
+
+    //     // }
+    //     // else if (speedLvl === 3) {
+
+    //     // }
+    //     // else if (speedLvl === 4) {
+
+    //     // }
+    //     // else if (speedLvl === 5) 
+        return Math.floor(Math.random() * 301 + 100);
     }
 };
 // var Enemy = function() {
@@ -86,15 +115,29 @@ class Player {
 }
 
 
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-const enemy1 = new Enemy(Enemy.getLocations(0));
-const enemy2 = new Enemy(Enemy.getLocations(1));
-const enemy3 = new Enemy(Enemy.getLocations(2));
+//let enemy1 = new Enemy(Enemy.chooseLocation(1), Enemy.chooseSpeed());
 
-let allEnemies = [enemy1, enemy2, enemy3];
+//for (let i = 0; i < 50; i++) {
+//     console.log(Enemy.chooseSpeed());
+// }
+
+
+
+let allEnemies = []; 
 let player = new Player();
+
+setInterval( function() {
+    console.log('interval');
+    const loc = Math.floor(Math.random() * 3)
+    const newEnemy = new Enemy(Enemy.chooseLocation(loc), Enemy.randomSpeed());
+    allEnemies.push(newEnemy);
+    allEnemies = allEnemies.filter(allEnemies => allEnemies.offScreen === false);
+    console.log('number of objects on screen' + allEnemies.length);
+}, 1000);
 
 
 
