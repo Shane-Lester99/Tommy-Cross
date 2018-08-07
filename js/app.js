@@ -123,10 +123,10 @@ class Enemy {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player {
-    constructor(theLocation = [200,300]) {
+    constructor() {
     	this.sprite = 'images/char-boy.png';
-    	this.x = theLocation[0];
-    	this.y = theLocation[1];
+    	this.x = 200;
+    	this.y = 300;
     	this.alive = true;
 
     }
@@ -194,10 +194,9 @@ class Player {
 
 class OtherItems {
     constructor() {
-        this.grassLocations = OtherItems.getGrassLocations();
-        this.stoneLocations = OtherItems.getStoneLocations();
-        this.waterLocations = OtherItems.getWaterLocations();
-
+        // this.grassLocations = OtherItems.getGrassLocations();
+        // this.stoneLocations = OtherItems.getStoneLocations();
+        // this.waterLocations = OtherItems.getWaterLocations();
     }
 
     static getGrassLocations() {
@@ -209,6 +208,27 @@ class OtherItems {
         // console.log(allGrassLocations);
         return allGrassLocations;
 
+    }
+
+    static getRandomLocationOf(squareType) {
+        if (squareType === 'grass') {
+            const grassSquares = OtherItems.getGrassLocations();
+            const numberOfGrassSquares = 10;
+            const randomizedIndex = Math.floor(Math.random() * numberOfGrassSquares);
+            return grassSquares[randomizedIndex];
+
+        }
+        else if (squareType === 'stone') {
+            const numberOfStoneSquares = 15;
+            const randomizedIndex = Math.floor(Math.random() * numberOfStoneSquares);
+            return this.stoneLocations[randomizedIndex];
+        }
+
+        else if (squareType === 'water') {
+            const numberOfWaterSquares = 5;
+            const randomizedIndex = Math.floor(Math.random() * numberOfWaterSquares);
+            return this.waterLocations[randomizedIndex];
+        }
     }
 
     static getStoneLocations() {
@@ -230,10 +250,36 @@ class OtherItems {
         // console.log(allWaterLocations);
         return allWaterLocations;
     }
+}
+
+class Rock extends OtherItems {
+    constructor(theLocation = [0,380]) {
+        super();
+        this.sprite = 'images/Rock.png';
+        this.x = theLocation[0];
+        this.y = theLocation[1];
+        this.theName = 'rock';
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    getItemInfo() {
+        return [this.theName, this.x, this.y];
+    }
+
+    isOccupied(locX, locY) {
+        let test = false;
+        if (this.x === locX && this.y === locY) {
+            test = true;
+        }
+        return test;
+    }
 
 }
 
-let test = new OtherItems();
+//allItems.push(testRock);
 
 // class Rocks extends OtherItems {
 //     constructor() {
@@ -252,11 +298,12 @@ let test = new OtherItems();
 // }
 
 let allEnemies = [];
+let allRocks = [];
 let player = new Player();
 
 // We should change the interval to make it easier to harder. default at 1 second spawns 
 //(about 4 to 6 enemies) each time
-setInterval( function() {
+setInterval( function setEnemies() {
     let loc = Enemy.chooseLocation(Math.floor(Math.random() * 3));
     let speed = Enemy.randomSpeed();
 
@@ -277,6 +324,42 @@ setInterval( function() {
     allEnemies = allEnemies.filter(allEnemies => allEnemies.offScreen === false);
     //console.log('number of objects on screen' + allEnemies.length);
 }, 1000);
+
+//console.log(OtherItems.grassLocations);
+
+setInterval( function setRocks() {
+    let loc = OtherItems.getRandomLocationOf('grass');
+
+    let shouldWeSetRock = true;
+    let playerLocation = player.getLocation();
+
+    // Make only 6 rocks max appear in grass
+    if (allRocks.length === 6) {
+        shouldWeSetRock = false;
+    }
+
+    else if (loc[0] === 200 && loc[1] === 300) {
+        shouldWeSetRock = false;
+    }
+
+    else if (loc[0] === player.x && loc[1] === player.y) {
+        shouldWeSetRock = false;
+    } 
+
+    else {
+        allRocks.forEach( function(item) {
+            if (item.isOccupied(loc[0], loc[1])) {
+                shouldWeSetRock = false;
+            }            
+        });
+    }
+
+    if (shouldWeSetRock) {
+        let newRock = new Rock(loc);
+        allRocks.push(newRock);
+    }
+
+}, 3000); //3000
 
 
 
