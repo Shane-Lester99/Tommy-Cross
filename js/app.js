@@ -248,15 +248,17 @@ class OtherItems {
 
         }
         else if (squareType === 'stone') {
+            const stoneSquares = OtherItems.getStoneLocations();
             const numberOfStoneSquares = 15;
             const randomizedIndex = Math.floor(Math.random() * numberOfStoneSquares);
-            return this.stoneLocations[randomizedIndex];
+            return stoneSquares[randomizedIndex];
         }
 
         else if (squareType === 'water') {
+            const waterSquares = OtherItems.getWaterLocations();
             const numberOfWaterSquares = 5;
             const randomizedIndex = Math.floor(Math.random() * numberOfWaterSquares);
-            return this.waterLocations[randomizedIndex];
+            return waterSquares[randomizedIndex];
         }
     }
 
@@ -363,8 +365,11 @@ setInterval( function setRocks() {
     let playerLocation = player.getLocation();
 
     // Make only 6 rocks max appear in grass
-    if (allRocks.length === 6) {
-        shouldWeSetRock = false;
+    if (allRocks.length >= 6) {
+        loc = OtherItems.getRandomLocationOf('water');
+        if (allRocks.length === 9) {
+            shouldWeSetRock = false;
+        }
     }
 
     else if (loc[0] === 200 && loc[1] === 300) {
@@ -375,7 +380,7 @@ setInterval( function setRocks() {
         shouldWeSetRock = false;
     } 
 
-    else {
+    if (shouldWeSetRock) {
         allRocks.forEach( function(item) {
             if (item.isOccupied(loc[0], loc[1])) {
                 shouldWeSetRock = false;
