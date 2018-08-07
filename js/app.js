@@ -49,19 +49,19 @@ class Enemy {
 
     findSquare() {
         let location = this.getRawLocation();
-        if (this.x >= 0 && this.x < 100) {
+        if (this.x >= 0 && this.x < 60) {
             location[0] = 0;
         }
-        else if (this.x >= 100 && this.x < 200) {
+        else if (this.x >= 60 && this.x < 160) {
             location[0] = 100;
         }
-        else if (this.x >= 200 && this.x < 300) {
+        else if (this.x >= 160 && this.x < 260) {
             location[0] = 200;
         }
-        else if (this.x >= 300 && this.x < 400) {
+        else if (this.x >= 2600 && this.x < 360) {
             location[0] = 300;
         }
-        else if (this.x >= 400 && this.x <= 480) {
+        else if (this.x >= 360 && this.x <= 460) {
             location[0] = 400;
         }
         return location;
