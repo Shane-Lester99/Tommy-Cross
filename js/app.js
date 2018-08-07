@@ -161,20 +161,42 @@ class Player {
     	return location;
     }
     
-    handleInput(movement) {
+    handleInput(movement, rocks) {
+        let dontMove = false;
     	if (movement === 'left') {
     		if (this.x !== 0) {
-    			this.x -= 100;
+                rocks.forEach( (aRock) => {
+                    if (aRock.isOccupied(this.x - 100, this.y)) {
+                        dontMove = true;
+                    }
+                });
+                if (dontMove === false) {
+    			    this.x -= 100;
+                }
             }
     	}
     	else if (movement === 'right') {
     		if (this.x !== 400) {
-    			this.x += 100;
+                rocks.forEach( (aRock) => {
+                    if (aRock.isOccupied(this.x + 100, this.y)) {
+                        dontMove = true;
+                    }
+                });
+                if (dontMove === false) {
+    			    this.x += 100;
+                }
     		}
     	}
     	else if (movement === 'down') {
     		if (this.y !== 380) {
-    			this.y += 80;
+                rocks.forEach( (aRock) => {
+                    if (aRock.isOccupied(this.x, this.y + 80)) {
+                        dontMove = true;
+                    }
+                });
+                if (dontMove === false) {
+    			    this.y += 80;
+                }
     			// console.log(this.y);
     		}
     		// console.log(this.y);
@@ -182,12 +204,19 @@ class Player {
     	}
     	else if (movement === 'up') {
     		 if (this.y !== -20) {
-	    		this.y -= 80;
+                rocks.forEach( (aRock) => {
+                    if (aRock.isOccupied(this.x, this.y - 80)) {
+                       dontMove = true;
+                    }
+                });
+                if (dontMove === false) {
+                    this.y -= 80;
+                }
 	    		// console.log(this.y);
 	    	}
 
     	}
-         console.log(`x: ${this.x}, y: ${this.y}`);
+         //console.log(`x: ${this.x}, y: ${this.y}`);
         return;
     }
 }
@@ -373,5 +402,5 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode]);
+    player.handleInput(allowedKeys[e.keyCode], allRocks);
 });
