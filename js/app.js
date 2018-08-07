@@ -58,7 +58,7 @@ class Enemy {
         else if (this.x >= 160 && this.x < 260) {
             location[0] = 200;
         }
-        else if (this.x >= 2600 && this.x < 360) {
+        else if (this.x >= 260 && this.x < 360) {
             location[0] = 300;
         }
         else if (this.x >= 360 && this.x <= 460) {
@@ -165,19 +165,16 @@ class Player {
     	if (movement === 'left') {
     		if (this.x !== 0) {
     			this.x -= 100;
-                console.log(this.getLocation());
-    		}
+            }
     	}
     	else if (movement === 'right') {
     		if (this.x !== 400) {
     			this.x += 100;
-                console.log(this.getLocation());
     		}
     	}
     	else if (movement === 'down') {
     		if (this.y !== 380) {
     			this.y += 80;
-                console.log(this.getLocation());
     			// console.log(this.y);
     		}
     		// console.log(this.y);
@@ -186,15 +183,63 @@ class Player {
     	else if (movement === 'up') {
     		 if (this.y !== -20) {
 	    		this.y -= 80;
-                console.log(this.getLocation());
 	    		// console.log(this.y);
 	    	}
 
     	}
+         console.log(`x: ${this.x}, y: ${this.y}`);
         return;
     }
 }
 
+class OtherItems {
+    constructor() {
+        this.grassLocations = OtherItems.getGrassLocations();
+        this.stoneLocations = OtherItems.getStoneLocations();
+        this.waterLocations = OtherItems.getWaterLocations();
+
+    }
+
+    static getGrassLocations() {
+        let allGrassLocations = [];
+        for (let x = 0; x <= 400; x += 100) {
+            allGrassLocations.push([x, 380]);
+            allGrassLocations.push([x, 300]);
+        }
+        // console.log(allGrassLocations);
+        return allGrassLocations;
+
+    }
+
+    static getStoneLocations() {
+        let allStoneLocations = [];
+        for (let x = 0; x <= 400; x += 100) {
+            allStoneLocations.push([x, 60]);
+            allStoneLocations.push([x, 140]);
+            allStoneLocations.push([x, 220]);
+        }
+        // console.log(allStoneLocations);
+        return allStoneLocations;
+    }
+
+    static getWaterLocations() {
+        let allWaterLocations = [];
+        for (let x = 0; x <= 400; x += 100) {
+            allWaterLocations.push([x, -20]);
+        }
+        // console.log(allWaterLocations);
+        return allWaterLocations;
+    }
+
+}
+
+let test = new OtherItems();
+
+// class Rocks extends OtherItems {
+//     constructor() {
+//         this.
+//     }
+// }
 
 
 // Now instantiate your objects.
