@@ -124,11 +124,21 @@ class Enemy {
 // a handleInput() method.
 class Player {
     constructor() {
+        this.allChar = ['images/char-boy.png', 'images/char-cat-girl.png', 'images/char-horn-girl.png', 'images/char-pink-girl.png', 'images/char-princess-girl.png'];
+        this.charNumber = 0;
     	this.sprite = 'images/char-boy.png';
     	this.x = 200;
     	this.y = 300;
     	this.alive = true;
 
+    }
+    changeCharacter() {
+        if (this.charNumber !== 4) {
+            this.charNumber ++;
+        } else {
+            this.charNumber = 0;
+        }
+        this.sprite = this.allChar[this.charNumber];
     }
     update(dt) {
         if (this.alive === false){
@@ -216,7 +226,9 @@ class Player {
 	    	}
 
     	}
-         //console.log(`x: ${this.x}, y: ${this.y}`);
+        else if (movement === 'enter') {
+            this.changeCharacter();
+        }
         return;
     }
 }
@@ -401,6 +413,7 @@ setInterval( function setRocks() {
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
     var allowedKeys = {
+        13: 'enter',
         37: 'left',
         38: 'up',
         39: 'right',
