@@ -61,7 +61,7 @@ class Enemy {
         else if (this.x >= 300 && this.x < 400) {
             location[0] = 300;
         }
-        else if (this.x >= 400) {
+        else if (this.x >= 400 && this.x <= 480) {
             location[0] = 400;
         }
         return location;
@@ -132,9 +132,20 @@ class Player {
     }
     update(dt) {
         if (this.alive === false){
-            this.x = 200;
-            this.y = 300;
-            this.alive = true;
+            setTimeout( () => {
+                this.x = 200;
+                this.y = 300;
+                this.alive = true;
+            }, 50);
+            
+        }
+        if (this.y === -20) {
+            setTimeout( () => {
+                alert('You win!');
+                this.x = 200;
+                this.y = 300;
+            }, 0);
+           
         }
         // console.log(this.alive);
         return;
