@@ -79,7 +79,7 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        //checkCollisions();
+       // checkCollisions();
     }
 
     /* This is called by the update function and loops through all of the
@@ -90,19 +90,26 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
+        const playerLocation = player.getLocation();
         allEnemies.forEach(function(enemy) {
-            enemy.update(dt);
+            let loc = enemy.update(dt);
+            if (playerLocation[0] === loc[0] && playerLocation[1] === loc[1]) {
+                player.alive = false;
+            }
+            //enemy.update(dt);
+            // if( enemy.update(dt) === playerLocation) {
+            //     console.log('collision');
+            // }
+
         });
         player.update();
     }
 
     // function checkCollisions() {
     //     const playerLocation = player.getLocation();
-
     //     allEnemies.forEach(function (enemy) {
-    //         console.log('hello');
-    //         console.log(player.getLocation(), " ", enemy.getLocation());
-    //         if (playerLocation === enemy.getLocation()) {
+    //         // console.log('s');
+    //         if (playerLocation === enemy.findSquare()) {
     //             console.log('collision!');
     //         }
     //     });

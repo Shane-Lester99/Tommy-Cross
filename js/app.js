@@ -30,6 +30,8 @@ class Enemy {
         else {
             this.offScreen = true;
         }
+        return this.findSquare();
+                //console.log(this.findSquare());
 
     };
 
@@ -38,11 +40,41 @@ class Enemy {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 
-    getLocation() {
+    getRawLocation() {
     	const location = [];
     	location.push(this.x);
     	location.push(this.y);
     	return location;
+    }
+
+    findSquare() {
+        let location = this.getRawLocation();
+        if (this.x >= 0 && this.x < 100) {
+            location[0] = 0;
+        }
+        else if (this.x >= 100 && this.x < 200) {
+            location[0] = 100;
+        }
+        else if (this.x >= 200 && this.x < 300) {
+            location[0] = 200;
+        }
+        else if (this.x >= 300 && this.x < 400) {
+            location[0] = 300;
+        }
+        else if (this.x >= 400) {
+            location[0] = 400;
+        }
+        return location;
+       // if (this.y === 60) {
+
+       // }
+       // else if (this.y === 140) {
+
+       // }
+       // else if (this.y === 220) {
+
+       // }
+
     }
 
     static chooseLocation(locNum) {
@@ -99,7 +131,12 @@ class Player {
 
     }
     update(dt) {
-
+        if (this.alive === false){
+            this.x = 200;
+            this.y = 300;
+            this.alive = true;
+        }
+        // console.log(this.alive);
         return;
     }
     render() {
@@ -117,16 +154,19 @@ class Player {
     	if (movement === 'left') {
     		if (this.x !== 0) {
     			this.x -= 100;
+                console.log(this.getLocation());
     		}
     	}
     	else if (movement === 'right') {
     		if (this.x !== 400) {
     			this.x += 100;
+                console.log(this.getLocation());
     		}
     	}
     	else if (movement === 'down') {
     		if (this.y !== 380) {
     			this.y += 80;
+                console.log(this.getLocation());
     			// console.log(this.y);
     		}
     		// console.log(this.y);
@@ -135,6 +175,7 @@ class Player {
     	else if (movement === 'up') {
     		 if (this.y !== -20) {
 	    		this.y -= 80;
+                console.log(this.getLocation());
 	    		// console.log(this.y);
 	    	}
 
