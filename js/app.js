@@ -38,6 +38,13 @@ class Enemy {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     };
 
+    getLocation() {
+    	const location = [];
+    	location.push(this.x);
+    	location.push(this.y);
+    	return location;
+    }
+
     static chooseLocation(locNum) {
         let location = [];
         // Bottom Square
@@ -88,14 +95,24 @@ class Player {
     	this.sprite = 'images/char-boy.png';
     	this.x = theLocation[0];
     	this.y = theLocation[1];
+    	this.alive = true;
 
     }
-    update() {
+    update(dt) {
+
         return;
     }
     render() {
     	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
+
+    getLocation() {
+    	const location = [];
+    	location.push(this.x);
+    	location.push(this.y);
+    	return location;
+    }
+    
     handleInput(movement) {
     	if (movement === 'left') {
     		if (this.x !== 0) {
