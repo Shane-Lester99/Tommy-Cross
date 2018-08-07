@@ -56,22 +56,6 @@ class Enemy {
     };
 
     static randomSpeed() {
-    //     // if (speedLvl === 0) {
-
-    //     // }
-    //     // else if (speedLvl === 1) {
-
-    //     // }
-    //     // else if (speedLvl === 2) {
-
-    //     // }
-    //     // else if (speedLvl === 3) {
-
-    //     // }
-    //     // else if (speedLvl === 4) {
-
-    //     // }
-    //     // else if (speedLvl === 5) 
         return Math.floor(Math.random() * 301 + 100);
     }
 };
@@ -100,16 +84,44 @@ class Enemy {
 // This class requires an update(), render() and
 // a handleInput() method.
 class Player {
-    constructor() {
+    constructor(theLocation = [200,300]) {
+    	this.sprite = 'images/char-boy.png';
+    	this.x = theLocation[0];
+    	this.y = theLocation[1];
 
     }
     update() {
         return;
     }
     render() {
-        return;
+    	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
-    handleInput() {
+    handleInput(movement) {
+    	if (movement === 'left') {
+    		if (this.x !== 0) {
+    			this.x -= 100;
+    		}
+    	}
+    	else if (movement === 'right') {
+    		if (this.x !== 400) {
+    			this.x += 100;
+    		}
+    	}
+    	else if (movement === 'down') {
+    		if (this.y !== 380) {
+    			this.y += 80;
+    			// console.log(this.y);
+    		}
+    		// console.log(this.y);
+
+    	}
+    	else if (movement === 'up') {
+    		 if (this.y !== -20) {
+	    		this.y -= 80;
+	    		// console.log(this.y);
+	    	}
+
+    	}
         return;
     }
 }
@@ -125,26 +137,27 @@ class Player {
 //     console.log(Enemy.chooseSpeed());
 // }
 
-
-
-let allEnemies = []; 
+let allEnemies = [];
 let player = new Player();
 
 // We should change the interval to make it easier to harder. default at 1 second spawns 
 //(about 4 to 6 enemies) each time
 setInterval( function() {
-    const loc = Enemy.chooseLocation(Math.floor(Math.random() * 3));
+    let loc = Enemy.chooseLocation(Math.floor(Math.random() * 3));
     let speed = Enemy.randomSpeed();
 
-    // Makes it so that enemies dont bang into each other
+    // TODO: Makes it so that enemies dont bang into each other
 
-    // allEnemies.forEach( function(currentEnemy) {
-    //     if (loc[1] === currentEnemy.y) {
-    //         while (speed > currentEnemy.speed) {
-    //             speed = Enemy.randomSpeed();
-    //         }
-    //     }
-    // });
+    allEnemies.forEach( function(currentEnemy) {
+
+        // Check if there are three enemies in that location, choose location
+
+        if (loc[1] === currentEnemy.y) {
+            while (speed > currentEnemy.speed) {
+                speed = Enemy.randomSpeed();
+            }
+        }
+    });
     const newEnemy = new Enemy(loc, speed);
     allEnemies.push(newEnemy);
     allEnemies = allEnemies.filter(allEnemies => allEnemies.offScreen === false);
