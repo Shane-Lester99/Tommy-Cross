@@ -1,3 +1,20 @@
 body {
     text-align: center;
+    background-color: lightslategrey;
 }
+
+canvas {
+	/*width: 75%;
+	height: 60%;
+	margin: auto;*/
+	/*position: relative;*/
+}
+
+/*.reset-button {
+	position: relative;
+	width: px;
+	height: 100px;
+	top: -75%;
+	left: 350px;
+	z-index: 100;
+}*/

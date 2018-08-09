@@ -440,12 +440,13 @@ class ResetButton extends Sidebar {
         super();
         this.symbol = '⟲';
         [this.x, this.y] = Sidebar.resetButtonLocation();
+        //this.button = document.querySelector('.resetButton');
     }
 
     render() {
-        ctx.font = '48px serif';
-       ctx.fillText(`${this.symbol}`, this.x, this.y);
+        ctx.fillText(this.symbol, this.x, this.y);
     }
+    
 }
 
 class Heart extends Sidebar {
@@ -525,6 +526,20 @@ class GameVariables {
 
     winGame() {
         alert('You Win');
+        this.allEnemies = [];
+        this.allRocks = [];
+        this.player.x = 200;
+        this.player.y = 300;
+        this.glowStage.x = 200;
+        this.glowStage.y = 140 - 25;
+        // let heart1 = new Heart(0);
+        // let heart2 = new Heart(1);
+        // let heart3 = new Heart(2);
+        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+        this.gameScore.theScore = 0;
+    }
+
+    resetGame() {
         this.allEnemies = [];
         this.allRocks = [];
         this.player.x = 200;
@@ -664,3 +679,23 @@ document.addEventListener('keyup', function(e) {
 
     game.player.handleInput(allowedKeys[e.keyCode], game.allRocks);
 });
+
+setTimeout(function () {
+    let canvas = document.querySelector('canvas');
+    canvas.addEventListener('click', function setupResetButton(event) {
+        let boundingRect = canvas.getBoundingClientRect();
+        const xLoc = event.clientX - boundingRect.left;
+        const yLoc = event.clientY - boundingRect.top;
+        if (  xLoc >= 430 && xLoc <= 480) {
+            if (yLoc >= 625 && yLoc <= 675) {
+                setTimeout(function() {
+                    game.resetGame();
+                }, 100);
+               
+            }
+        }
+       
+    });
+    
+}, 0);
+    
