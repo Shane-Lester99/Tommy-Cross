@@ -90,11 +90,11 @@ var Engine = (function(global) {
      * render methods.
      */
     function updateEntities(dt) {
-        const playerLocation = player.getLocation();
-        allEnemies.forEach(function(enemy) {
+        const playerLocation = game.player.getLocation();
+        game.allEnemies.forEach(function(enemy) {
             let loc = enemy.update(dt);
             if (playerLocation[0] === loc[0] && playerLocation[1] === loc[1]) {
-                player.alive = false;
+               game.player.alive = false;
             }
             //enemy.update(dt);
             // if( enemy.update(dt) === playerLocation) {
@@ -102,7 +102,7 @@ var Engine = (function(global) {
             // }
 
         });
-        player.update();
+        game.player.update();
     }
 
     // function checkCollisions() {
@@ -168,24 +168,24 @@ var Engine = (function(global) {
         /* Loop through all of the objects within the allEnemies array and call
          * the render function you have defined.
          */
-        allEnemies.forEach(function(enemy) {
+        game.allEnemies.forEach(function(enemy) {
             enemy.render();
         });
 
-        player.render();
+        game.player.render();
 
-        testGlow.render();
+        game.glowStage.render();
 
-        sidebar.render();
+        game.sidebar.render();
         
-        allHearts.forEach(function(heart) {
+        game.allHearts.forEach(function(heart) {
             heart.render();
         });
 
         
         
 
-        allRocks.forEach(function(rock) {
+        game.allRocks.forEach(function(rock) {
             rock.render();
         })
     }

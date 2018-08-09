@@ -67,16 +67,6 @@ class Enemy {
             location[0] = 400;
         }
         return location;
-       // if (this.y === 60) {
-
-       // }
-       // else if (this.y === 140) {
-
-       // }
-       // else if (this.y === 220) {
-
-       // }
-
     }
 
     static chooseLocation(locNum) {
@@ -148,10 +138,10 @@ class Player {
                 this.y = 300;
                 if (this.alive === false) {
                     setTimeout( function popHeart() {
-                        allHearts.pop();
-                        if (allHearts.length === 0) {
+                        game.allHearts.pop();
+                        if (game.allHearts.length === 0) {
                             setTimeout( function endOfGame(){
-                                loseGame();
+                                game.loseGame();
                             }, 300);
                             
                         }
@@ -162,9 +152,7 @@ class Player {
         } 
         if (this.y === -20) {
             setTimeout( () => {
-                alert('You win!');
-                this.x = 200;
-                this.y = 300;
+                game.winGame();
             }, 0);
            
         }
@@ -242,6 +230,7 @@ class Player {
         }
         return;
     }
+
 }
 
 class OtherItems {
@@ -405,6 +394,48 @@ class Heart extends Sidebar {
 }
 
 
+class GameVariables {
+    constructor() {
+        this.allEnemies = [];
+        this.allRocks = [];
+        this.player = new Player();
+        this.glowStage = new GlowStage();
+        this.sidebar = new Sidebar();
+        // let heart1 = new Heart(0);
+        // let heart2 = new Heart(1);
+        // let heart3 = new Heart(2);
+        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
+    }
+
+    loseGame() {
+        alert('You Lose');
+        this.allEnemies = [];
+        this.allRocks = [];
+        this.player.x = 200;
+        this.player.y = 300;
+        this.glowStage.x = 200;
+        this.glowStage.y = 140;
+        // let heart1 = new Heart(0);
+        // let heart2 = new Heart(1);
+        // let heart3 = new Heart(2);
+        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+    }
+
+    winGame() {
+        alert('You Win');
+        this.allEnemies = [];
+        this.allRocks = [];
+        this.player.x = 200;
+        this.player.y = 300;
+        this.glowStage.x = 200;
+        this.glowStage.y = 140;
+        // let heart1 = new Heart(0);
+        // let heart2 = new Heart(1);
+        // let heart3 = new Heart(2);
+        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+    }
+}
+
 
 //allItems.push(testRock);
 
@@ -424,20 +455,18 @@ class Heart extends Sidebar {
 //     console.log(Enemy.chooseSpeed());
 // }
 
-let allEnemies = [];
-let allRocks = [];
-let player = new Player();
-let testGlow = new GlowStage();
-let sidebar = new Sidebar();
-let allHearts = [];
-let heart1 = new Heart(0);
-let heart2 = new Heart(1);
-let heart3 = new Heart(2);
-allHearts.push(heart1, heart2, heart3);
+const game = new GameVariables();
 
-function loseGame() {
-    alert('You Lose');
-}
+// let allEnemies = [];
+// let allRocks = [];
+// let player = new Player();
+// let testGlow = new GlowStage();
+// let sidebar = new Sidebar();
+// let allHearts = [];
+// let heart1 = new Heart(0);
+// let heart2 = new Heart(1);
+// let heart3 = new Heart(2);
+// allHearts.push(heart1, heart2, heart3);
 
 // // let sidebar = new Sidebar(false);
 // setTimeout(function addSidebar() {
@@ -456,9 +485,7 @@ setInterval( function setEnemies() {
     let loc = Enemy.chooseLocation(Math.floor(Math.random() * 3));
     let speed = Enemy.randomSpeed();
 
-    // TODO: Makes it so that enemies dont bang into each other
-
-    allEnemies.forEach( function(currentEnemy) {
+    game.allEnemies.forEach( function(currentEnemy) {
 
         // Check if there are three enemies in that location, choose location
 
@@ -469,8 +496,8 @@ setInterval( function setEnemies() {
         }
     });
     const newEnemy = new Enemy(loc, speed);
-    allEnemies.push(newEnemy);
-    allEnemies = allEnemies.filter(allEnemies => allEnemies.offScreen === false);
+    game.allEnemies.push(newEnemy);
+    game.allEnemies = game.allEnemies.filter(allEnemies => allEnemies.offScreen === false);
     //console.log('number of objects on screen' + allEnemies.length);
 }, 1000);
 
@@ -480,12 +507,12 @@ setInterval( function setRocks() {
     let loc = OtherItems.getRandomLocationOf('grass');
 
     let shouldWeSetRock = true;
-    let playerLocation = player.getLocation();
+    let playerLocation = game.player.getLocation();
 
     // Make only 6 rocks max appear in grass
-    if (allRocks.length >= 6) {
+    if (game.allRocks.length >= 6) {
         loc = OtherItems.getRandomLocationOf('water');
-        if (allRocks.length === 9) {
+        if (game.allRocks.length === 9) {
             shouldWeSetRock = false;
         }
     }
@@ -495,12 +522,12 @@ setInterval( function setRocks() {
         shouldWeSetRock = false;
     }
 
-    else if (loc[0] === player.x && loc[1] === player.y) {
+    else if (loc[0] === game.player.x && loc[1] === game.player.y) {
         shouldWeSetRock = false;
     } 
 
     if (shouldWeSetRock) {
-        allRocks.forEach( function(item) {
+        game.allRocks.forEach( function(item) {
             if (item.isOccupied(loc[0], loc[1] - 20)) {
                 shouldWeSetRock = false;
             }            
@@ -509,15 +536,15 @@ setInterval( function setRocks() {
 
     if (shouldWeSetRock) {
         let newRock = new Rock(loc);
-        allRocks.push(newRock);
+        game.allRocks.push(newRock);
     }
 
-}, 3000); //3000
+}, 10000); //3000
 
 setInterval( function setGlowStage() {
     let loc = OtherItems.getRandomLocationOf('stone');
-    testGlow.x = loc[0];
-    testGlow.y = loc[1] - 25;
+    game.glowStage.x = loc[0];
+    game.glowStage.y = loc[1] - 25;
 
 }, 5000);
 
@@ -532,5 +559,5 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
     };
 
-    player.handleInput(allowedKeys[e.keyCode], allRocks);
+    game.player.handleInput(allowedKeys[e.keyCode], game.allRocks);
 });
