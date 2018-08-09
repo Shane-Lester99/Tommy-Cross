@@ -130,11 +130,10 @@ class Player {
     	this.x = 200;
     	this.y = 300;
     	this.alive = true;
-
     }
     changeCharacter() {
         if (this.charNumber !== 4) {
-            this.charNumber ++;
+            this.charNumber++;
         } else {
             this.charNumber = 0;
         }
@@ -176,7 +175,7 @@ class Player {
     	if (movement === 'left') {
     		if (this.x !== 0) {
                 rocks.forEach( (aRock) => {
-                    if (aRock.isOccupied(this.x - 100, this.y)) {
+                    if (aRock.isOccupied(this.x - 100, this.y - 20)) {
                         dontMove = true;
                     }
                 });
@@ -188,7 +187,7 @@ class Player {
     	else if (movement === 'right') {
     		if (this.x !== 400) {
                 rocks.forEach( (aRock) => {
-                    if (aRock.isOccupied(this.x + 100, this.y)) {
+                    if (aRock.isOccupied(this.x + 100, this.y - 20)) {
                         dontMove = true;
                     }
                 });
@@ -200,7 +199,7 @@ class Player {
     	else if (movement === 'down') {
     		if (this.y !== 380) {
                 rocks.forEach( (aRock) => {
-                    if (aRock.isOccupied(this.x, this.y + 80)) {
+                    if (aRock.isOccupied(this.x, this.y + 80 - 20)) {
                         dontMove = true;
                     }
                 });
@@ -215,7 +214,7 @@ class Player {
     	else if (movement === 'up') {
     		 if (this.y !== -20) {
                 rocks.forEach( (aRock) => {
-                    if (aRock.isOccupied(this.x, this.y - 80)) {
+                    if (aRock.isOccupied(this.x, this.y - 80 - 20)) {
                        dontMove = true;
                     }
                 });
@@ -300,7 +299,7 @@ class Rock extends OtherItems {
         super();
         this.sprite = 'images/Rock.png';
         this.x = theLocation[0];
-        this.y = theLocation[1];
+        this.y = theLocation[1] - 20;
         this.theName = 'rock';
     }
 
@@ -384,6 +383,7 @@ setInterval( function setRocks() {
         }
     }
 
+
     else if (loc[0] === 200 && loc[1] === 300) {
         shouldWeSetRock = false;
     }
@@ -394,7 +394,7 @@ setInterval( function setRocks() {
 
     if (shouldWeSetRock) {
         allRocks.forEach( function(item) {
-            if (item.isOccupied(loc[0], loc[1])) {
+            if (item.isOccupied(loc[0], loc[1] - 20)) {
                 shouldWeSetRock = false;
             }            
         });
@@ -405,7 +405,7 @@ setInterval( function setRocks() {
         allRocks.push(newRock);
     }
 
-}, 3000); //3000
+}, 0); //3000
 
 
 
