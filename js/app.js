@@ -365,6 +365,10 @@ class Sidebar {
         }
     }
 
+    static scoreLocation() {
+        return [340, 670];
+    }
+
     render() {
         ctx.strokeRect(0, 600, 505, 110);
         ctx.beginPath()
@@ -393,6 +397,22 @@ class Heart extends Sidebar {
     }
 }
 
+class Score extends Sidebar {
+    constructor() {
+        super();
+        this.theScore = 0;
+        this.x = Sidebar.scoreLocation()[0];
+        this.y = Sidebar.scoreLocation()[1];
+        this.theName = 'score';
+
+    }
+
+     render() {
+        ctx.font = '48px serif';
+        ctx.fillText(`${this.theScore}`, this.x, this.y);
+    }
+}
+
 
 class GameVariables {
     constructor() {
@@ -405,6 +425,7 @@ class GameVariables {
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
+        this.gameScore = new Score();
     }
 
     loseGame() {
@@ -419,6 +440,7 @@ class GameVariables {
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+        this.gameScore = 0;
     }
 
     winGame() {
@@ -433,6 +455,7 @@ class GameVariables {
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+        this.gameScore = 0;
     }
 }
 

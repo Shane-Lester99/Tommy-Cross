@@ -182,8 +182,7 @@ var Engine = (function(global) {
             heart.render();
         });
 
-        
-        
+        game.gameScore.render();
 
         game.allRocks.forEach(function(rock) {
             rock.render();
