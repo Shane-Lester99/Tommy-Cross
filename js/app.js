@@ -183,6 +183,9 @@ class Player {
     			    this.x -= 100;
                 }
             }
+            else {
+                dontMove = true;
+            }
     	}
     	else if (movement === 'right') {
     		if (this.x !== 400) {
@@ -194,7 +197,9 @@ class Player {
                 if (dontMove === false) {
     			    this.x += 100;
                 }
-    		}
+    		} else {
+                dontMove = true;
+            }
     	}
     	else if (movement === 'down') {
     		if (this.y !== 380) {
@@ -207,7 +212,9 @@ class Player {
     			    this.y += 80;
                 }
     			// console.log(this.y);
-    		}
+    		} else {
+                dontMove = true;
+            }
     		// console.log(this.y);
 
     	}
@@ -222,9 +229,17 @@ class Player {
                     this.y -= 80;
                 }
 	    		// console.log(this.y);
-	    	}
+	    	} else {
+                dontMove = true;
+            }
 
     	}
+        console.log(dontMove);
+        if (dontMove === false) {
+            setTimeout(function stoneSpaceScore() {
+                game.gameScore.theScore += 5;
+            }, 0);
+        }
         else if (movement === 'enter') {
             this.changeCharacter();
         }
@@ -444,6 +459,9 @@ class Score extends Sidebar {
         else {
              ctx.font = '20px serif';
         }
+
+        [this.x, this.y] = Sidebar.scoreLocation(this.theScore);
+
         ctx.fillText(`${this.theScore}`, this.x, this.y);
     }
 }
