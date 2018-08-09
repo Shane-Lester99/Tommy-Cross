@@ -347,6 +347,40 @@ class Rock extends OtherItems {
 
 }
 
+class Sidebar {
+    constructor(alreadyInitialized = true) { 
+        if (alreadyInitialized === false) {
+            this.initSidebar();
+        }    
+    }
+    initSidebar() {
+        const sidebarCanvas = document.createElement('canvas');
+        const sidebarCtx = sidebarCanvas.getContext('2d');
+        sidebarCanvas.width = 100;
+        sidebarCanvas.height = 606;
+        document.body.appendChild(sidebarCanvas);
+        sidebarCtx.strokeRect(0,50,100,536);
+
+    }
+}
+
+class Heart extends Sidebar {
+    constructor(theLocation = [0,100]) {
+        super();
+        this.sprite = 'images/Heart.png';
+        this.x = theLocation[0];
+        this.y = theLocation[1];
+        this.theName = 'heart';
+
+    }
+
+     render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+}
+
+
+
 //allItems.push(testRock);
 
 // class Rocks extends OtherItems {
@@ -369,6 +403,12 @@ let allEnemies = [];
 let allRocks = [];
 let player = new Player();
 let testGlow = new GlowStage();
+setTimeout( function initSidebar() {
+    let sidebar = new Sidebar(false);
+    //let heart = new Heart();
+}, 0);
+
+
 
 // We should change the interval to make it easier to harder. default at 1 second spawns 
 //(about 4 to 6 enemies) each time
@@ -440,8 +480,6 @@ setInterval( function setGlowStage() {
     testGlow.y = loc[1] - 25;
 
 }, 5000);
-
-
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
