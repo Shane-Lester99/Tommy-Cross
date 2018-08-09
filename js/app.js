@@ -24,7 +24,7 @@ class Enemy {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
-        if (this.x <= 505) {
+        if (this.x <= 505) { //505
             this.x += dt * this.speed;
         }
         else {
@@ -37,7 +37,9 @@ class Enemy {
 
     // Draw the enemy on the screen, required method for game
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        if (this.x <= 505) {
+         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+        }
     };
 
     getRawLocation() {
@@ -348,28 +350,33 @@ class Rock extends OtherItems {
 }
 
 class Sidebar {
-    constructor(alreadyInitialized = true) { 
-        if (alreadyInitialized === false) {
-            this.initSidebar();
-        }    
+    constructor() { 
     }
-    initSidebar() {
-        const sidebarCanvas = document.createElement('canvas');
-        const sidebarCtx = sidebarCanvas.getContext('2d');
-        sidebarCanvas.width = 100;
-        sidebarCanvas.height = 606;
-        document.body.appendChild(sidebarCanvas);
-        sidebarCtx.strokeRect(0,50,100,536);
+   
+    static heartLocations(number = 0) {
+        if (number === 0) {
+            return [0,560];
+        } 
+        else if (number === 1) {
+            return [100, 560];
 
+        } 
+        else if (number === 2) {
+            return [200, 560];
+        }
+    }
+
+    render() {
+        ctx.strokeRect(0, 600, 505, 110);
     }
 }
 
 class Heart extends Sidebar {
-    constructor(theLocation = [0,100]) {
+    constructor(theLocation = 0) {
         super();
         this.sprite = 'images/Heart.png';
-        this.x = theLocation[0];
-        this.y = theLocation[1];
+        this.x = Sidebar.heartLocations(theLocation)[0];
+        this.y = Sidebar.heartLocations(theLocation)[1];
         this.theName = 'heart';
 
     }
@@ -403,10 +410,22 @@ let allEnemies = [];
 let allRocks = [];
 let player = new Player();
 let testGlow = new GlowStage();
-setTimeout( function initSidebar() {
-    let sidebar = new Sidebar(false);
+let sidebar = new Sidebar();
+let allHearts = [];
+let heart1 = new Heart(0);
+let heart2 = new Heart(1);
+let heart3 = new Heart(2);
+allHearts.push(heart1, heart2, heart3);
+
+
+// // let sidebar = new Sidebar(false);
+// setTimeout(function addSidebar() {
+//     sidebar = new Sidebar(false);
+
+// }, 0);
+
     //let heart = new Heart();
-}, 0);
+
 
 
 
