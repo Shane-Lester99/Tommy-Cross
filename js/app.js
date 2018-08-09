@@ -378,6 +378,14 @@ class Sidebar {
 
     render() {
         ctx.strokeRect(0, 600, 505, 110);
+        ctx.beginPath()
+        ctx.moveTo(305, 600);
+        ctx.lineTo(305, 710);
+        ctx.stroke();
+
+        ctx.moveTo(405, 600);
+        ctx.lineTo(405, 710);
+        ctx.stroke();
     }
 }
 
