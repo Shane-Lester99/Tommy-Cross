@@ -151,7 +151,7 @@ class Player {
             }, 50);            
         } 
         if (this.y === -20) {
-            setTimeout( () => {
+            setTimeout( function gameWon() {
                 game.winGame();
             }, 0);
            
@@ -365,8 +365,32 @@ class Sidebar {
         }
     }
 
-    static scoreLocation() {
-        return [340, 670];
+    static scoreLocation(range = 0) {
+        // 0 - 9
+        if (range >= 0 && range <= 9) {
+            return [340, 670];
+        }
+        //10 - 99
+        else if (range >= 10 && range <= 99 ) {
+            return [330, 670];
+        }
+        //100-999
+        else if (range >= 100 && range <= 999) {
+            return [320, 670];
+        }
+        // 1000 - 9999
+        else if (range >= 1000 && range <= 9999) {
+            return [307, 670];
+        }
+        // 10,000 - 99,999
+        else if (range >= 10000 && range <= 99999) {
+            return [310, 665]
+        }
+        else {
+            return [310, 660]
+        }
+
+        
     }
 
     render() {
@@ -401,18 +425,28 @@ class Score extends Sidebar {
     constructor() {
         super();
         this.theScore = 0;
-        this.x = Sidebar.scoreLocation()[0];
-        this.y = Sidebar.scoreLocation()[1];
+        this.x = Sidebar.scoreLocation(0)[0];
+        this.y = Sidebar.scoreLocation(0)[1];
         this.theName = 'score';
 
     }
 
-     render() {
-        ctx.font = '48px serif';
+    render() {
+        if (this.theScore < 10000) {
+            ctx.font = '48px serif';
+        } 
+        else if (this.theScore >= 10000 && this.theScore <= 99999) {
+            ctx.font = '36px serif';
+        }
+        else if (this.theScore >= 100000 && this.theScore <= 999999) {
+            ctx.font = '30px serif';
+        }
+        else {
+             ctx.font = '20px serif';
+        }
         ctx.fillText(`${this.theScore}`, this.x, this.y);
     }
 }
-
 
 class GameVariables {
     constructor() {
@@ -440,7 +474,7 @@ class GameVariables {
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
-        this.gameScore = 0;
+        this.gameScore.theScore = 0;
     }
 
     winGame() {
@@ -455,7 +489,7 @@ class GameVariables {
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
-        this.gameScore = 0;
+        this.gameScore.theScore = 0;
     }
 }
 
