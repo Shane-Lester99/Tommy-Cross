@@ -418,6 +418,10 @@ class Sidebar {
         
     }
 
+    static resetButtonLocation() {
+        return [430, 670];
+    }
+
     render() {
         ctx.strokeRect(0, 600, 505, 110);
         ctx.beginPath()
@@ -428,6 +432,19 @@ class Sidebar {
         ctx.moveTo(405, 600);
         ctx.lineTo(405, 710);
         ctx.stroke();
+    }
+}
+
+class ResetButton extends Sidebar {
+    constructor() {
+        super();
+        this.symbol = '⟲';
+        [this.x, this.y] = Sidebar.resetButtonLocation();
+    }
+
+    render() {
+        ctx.font = '48px serif';
+       ctx.fillText(`${this.symbol}`, this.x, this.y);
     }
 }
 
@@ -488,6 +505,7 @@ class GameVariables {
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
         this.gameScore = new Score();
+        this.resetButton = new ResetButton();
     }
 
     loseGame() {
