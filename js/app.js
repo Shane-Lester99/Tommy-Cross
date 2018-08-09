@@ -146,10 +146,20 @@ class Player {
             setTimeout( () => {
                 this.x = 200;
                 this.y = 300;
+                if (this.alive === false) {
+                    setTimeout( function popHeart() {
+                        allHearts.pop();
+                        if (allHearts.length === 0) {
+                            setTimeout( function endOfGame(){
+                                loseGame();
+                            }, 300);
+                            
+                        }
+                    }, 300);
+                }
                 this.alive = true;
-            }, 50);
-            
-        }
+            }, 50);            
+        } 
         if (this.y === -20) {
             setTimeout( () => {
                 alert('You win!');
@@ -417,6 +427,9 @@ let heart2 = new Heart(1);
 let heart3 = new Heart(2);
 allHearts.push(heart1, heart2, heart3);
 
+function loseGame() {
+    alert('You Lose');
+}
 
 // // let sidebar = new Sidebar(false);
 // setTimeout(function addSidebar() {
