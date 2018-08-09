@@ -294,6 +294,32 @@ class OtherItems {
     }
 }
 
+class GlowStage extends OtherItems {
+    constructor(theLocation = [200,140]) {
+        super();
+        this.sprite = 'images/Selector.png';
+        this.x = theLocation[0];
+        this.y = theLocation[1] - 25;
+        this.theName = 'glow';
+    }
+
+    render() {
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    // getItemInfo() {
+    //     return [this.theName, this.x, this.y];
+    // }
+
+    // isOccupied(locX, locY) {
+    //     let test = false;
+    //     if (this.x === locX && this.y === locY) {
+    //         test = true;
+    //     }
+    //     return test;
+    // }
+}
+
 class Rock extends OtherItems {
     constructor(theLocation = [0,380]) {
         super();
@@ -342,6 +368,7 @@ class Rock extends OtherItems {
 let allEnemies = [];
 let allRocks = [];
 let player = new Player();
+let testGlow = new GlowStage();
 
 // We should change the interval to make it easier to harder. default at 1 second spawns 
 //(about 4 to 6 enemies) each time
@@ -405,7 +432,14 @@ setInterval( function setRocks() {
         allRocks.push(newRock);
     }
 
-}, 0); //3000
+}, 3000); //3000
+
+setInterval( function setGlowStage() {
+    let loc = OtherItems.getRandomLocationOf('stone');
+    testGlow.x = loc[0];
+    testGlow.y = loc[1] - 25;
+
+}, 5000);
 
 
 

@@ -174,6 +174,8 @@ var Engine = (function(global) {
 
         player.render();
 
+        testGlow.render();
+
         allRocks.forEach(function(rock) {
             rock.render();
         })
@@ -201,7 +203,8 @@ var Engine = (function(global) {
         'images/char-horn-girl.png',
         'images/char-pink-girl.png',
         'images/char-princess-girl.png',
-        'images/Rock.png'
+        'images/Rock.png',
+        'images/Selector.png'
     ]);
     Resources.onReady(init);
 
