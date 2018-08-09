@@ -237,15 +237,15 @@ class Player {
             }
 
     	}
+        else if (movement === 'enter') {
+            this.changeCharacter();
+        }
         if (dontMove === false) {
             setTimeout(function stoneSpaceScore() {
                 if (game.player.y === 60 || game.player.y === 140 || game.player.y ===  220) {
                     game.gameScore.theScore += 5;
                 }
             }, 0);
-        }
-        else if (movement === 'enter') {
-            this.changeCharacter();
         }
         return;
     }
