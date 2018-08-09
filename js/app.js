@@ -160,6 +160,9 @@ class Player {
         return;
     }
     render() {
+        if (game.glowStage.onGlowStage(this.x, this.y - 25)) {
+            game.gameScore.theScore += 1;
+        }
     	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
@@ -234,10 +237,11 @@ class Player {
             }
 
     	}
-        console.log(dontMove);
         if (dontMove === false) {
             setTimeout(function stoneSpaceScore() {
-                game.gameScore.theScore += 5;
+                if (game.player.y === 60 || game.player.y === 140 || game.player.y ===  220) {
+                    game.gameScore.theScore += 5;
+                }
             }, 0);
         }
         else if (movement === 'enter') {
@@ -321,6 +325,12 @@ class GlowStage extends OtherItems {
 
     render() {
         ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+    }
+
+    onGlowStage(xLocation, yLocation) {
+        if (xLocation === this.x && yLocation === this.y) {
+            return true;
+        }
     }
 
     // getItemInfo() {
@@ -487,7 +497,7 @@ class GameVariables {
         this.player.x = 200;
         this.player.y = 300;
         this.glowStage.x = 200;
-        this.glowStage.y = 140;
+        this.glowStage.y = 140 - 25;
         // let heart1 = new Heart(0);
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
@@ -502,7 +512,7 @@ class GameVariables {
         this.player.x = 200;
         this.player.y = 300;
         this.glowStage.x = 200;
-        this.glowStage.y = 140;
+        this.glowStage.y = 140 - 25;
         // let heart1 = new Heart(0);
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
@@ -614,14 +624,14 @@ setInterval( function setRocks() {
         game.allRocks.push(newRock);
     }
 
-}, 10000); //3000
+}, 10000); //10000
 
 setInterval( function setGlowStage() {
     let loc = OtherItems.getRandomLocationOf('stone');
     game.glowStage.x = loc[0];
     game.glowStage.y = loc[1] - 25;
 
-}, 5000);
+}, 5000); // 5000
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
