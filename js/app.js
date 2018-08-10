@@ -669,15 +669,24 @@ setInterval( function setGlowStage() {
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    let allowedKeys = {
         13: 'enter',
         37: 'left',
         38: 'up',
         39: 'right',
         40: 'down'
-    };
+     };
 
     game.player.handleInput(allowedKeys[e.keyCode], game.allRocks);
+
+    //document.body.style = 'overflow:scroll';
+
+    
+    
+});
+
+document.addEventListener('keydown', function disableKeyScrolling(e) {
+    e.preventDefault();
 });
 
 setTimeout(function () {
