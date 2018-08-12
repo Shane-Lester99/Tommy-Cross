@@ -12,4 +12,17 @@ h1 {
 	height: 65px;
 	font-size: 70px;
 
+	/*border-bottom: dotted;
+	border-width: 10px;
+	border-radius: 4px;
+	width: 505px;*/
+}
+
+.page-divider {
+	border-style: dotted;
+	border-width: 5px;
+	border-radius: 4px;
+	width: 505px;
+	margin: auto;
+	background-color: slategrey;
 }
