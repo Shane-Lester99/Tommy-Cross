@@ -173,7 +173,10 @@ class Player {
     	return location;
     }
     
-    handleInput(movement, rocks) {
+    handleInput(movement, rocks, playerMovable) {
+        if (playerMovable === false) {
+            return;
+        }
         let dontMove = false;
     	if (movement === 'left') {
     		if (this.x !== 0) {
@@ -507,25 +510,83 @@ class GameVariables {
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
         this.gameScore = new Score();
         this.resetButton = new ResetButton();
+        this.isPlayerMoveable = true;
     }
 
     loseGame() {
-        alert('You Lose');
-        this.allEnemies = [];
-        this.allRocks = [];
-        this.player.x = 200;
-        this.player.y = 300;
-        this.glowStage.x = 200;
-        this.glowStage.y = 140 - 25;
-        // let heart1 = new Heart(0);
-        // let heart2 = new Heart(1);
-        // let heart3 = new Heart(2);
-        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
-        this.gameScore.theScore = 0;
+        this.isPlayerMoveable = false;
+        this.openModal('loss');
+        // alert('You Lose');
+        // this.allEnemies = [];
+        // this.allRocks = [];
+        // this.player.x = 200;
+        // this.player.y = 300;
+        // this.glowStage.x = 200;
+        // this.glowStage.y = 140 - 25;
+        // // let heart1 = new Heart(0);
+        // // let heart2 = new Heart(1);
+        // // let heart3 = new Heart(2);
+        // this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+        // this.gameScore.theScore = 0;
     }
 
     winGame() {
-        alert('You Win');
+        // setTimeout( function displayWinModal() {
+
+        // }
+        this.isPlayerMoveable = false;
+        this.openModal('win');
+        // this.allEnemies = [];
+        // this.allRocks = [];
+        // this.player.x = 200;
+        // this.player.y = 300;
+        // this.glowStage.x = 200;
+        // this.glowStage.y = 140 - 25;
+        // // let heart1 = new Heart(0);
+        // // let heart2 = new Heart(1);
+        // // let heart3 = new Heart(2);
+        // this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+        // this.gameScore.theScore = 0;
+    }
+
+    openModal(theEvent = 'win') {
+    	const modal = document.querySelector('.modal');
+    	modal.style.visibility = 'visible';
+
+        ///const textOfModal = modal.firstChild;
+
+        //alert(textOfModal);
+       // buttonOfModal.innerHTML = 'continue';
+        //modal.firstChild.innerHTML = 'Continue';
+    	if (theEvent === 'win') {
+           modal.firstChild.textContent = GameVariables.getWinMessage(this.gameScore.theScore);
+
+    	}
+    	else if (theEvent === 'loss') {
+            modal.firstChild.textContent = GameVariables.getLossMessage();
+        }
+     //    const button = modal.childNodes[3];
+
+        // alert(button.outerHTML);
+
+
+        // button.addEventListener('click', function() {
+        //     alert('button clicked');
+        // });
+     //    alert(textOfModal);
+    	// else if (theEvent === 'help') {
+
+    	// }
+    }
+
+    closeModal() {
+        const modal = document.querySelector('.modal');
+        modal.style.visibility = 'hidden';
+        this.resetGame();
+    }
+
+    resetGame() {
+        this.isPlayerMoveable = true;
         this.allEnemies = [];
         this.allRocks = [];
         this.player.x = 200;
@@ -539,18 +600,17 @@ class GameVariables {
         this.gameScore.theScore = 0;
     }
 
-    resetGame() {
-        this.allEnemies = [];
-        this.allRocks = [];
-        this.player.x = 200;
-        this.player.y = 300;
-        this.glowStage.x = 200;
-        this.glowStage.y = 140 - 25;
-        // let heart1 = new Heart(0);
-        // let heart2 = new Heart(1);
-        // let heart3 = new Heart(2);
-        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
-        this.gameScore.theScore = 0;
+    static getHelpMessage() {
+    	return 'Lets Help!';
+    }
+
+    static getWinMessage(score = 0) {
+    	return `You Win with score ${score}`;
+
+    }
+
+    static getLossMessage() {
+    	return 'You Lose!'
     }
 }
 
@@ -677,7 +737,7 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
      };
 
-    game.player.handleInput(allowedKeys[e.keyCode], game.allRocks);
+    game.player.handleInput(allowedKeys[e.keyCode], game.allRocks, game.isPlayerMoveable);
 
     //document.body.style = 'overflow:scroll';
 
@@ -707,4 +767,12 @@ setTimeout(function () {
     });
     
 }, 0);
+
+function continueButtonClicked(event) {
+    event.preventDefault();
+    game.closeModal();
+
+}
+
+document.querySelector('.modal-button').addEventListener('click', continueButtonClicked);
     
