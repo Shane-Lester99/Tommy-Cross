@@ -416,13 +416,15 @@ class Sidebar {
         }
         else {
             return [310, 660]
-        }
-
-        
+        }    
     }
 
     static resetButtonLocation() {
-        return [430, 670];
+        return [430, 645];
+    }
+
+    static helpButtonLocation() {
+        return [443, 700];
     }
 
     render() {
@@ -430,6 +432,10 @@ class Sidebar {
         ctx.beginPath()
         ctx.moveTo(305, 600);
         ctx.lineTo(305, 710);
+        ctx.stroke();
+
+        ctx.moveTo(405, 655);
+        ctx.lineTo(550, 655);
         ctx.stroke();
 
         ctx.moveTo(405, 600);
@@ -447,6 +453,22 @@ class ResetButton extends Sidebar {
     }
 
     render() {
+        ctx.font = '48px serif';
+        ctx.fillText(this.symbol, this.x, this.y);
+    }
+    
+}
+
+class HelpButton extends Sidebar {
+    constructor() {
+        super();
+        this.symbol = '?';
+        [this.x, this.y] = Sidebar.helpButtonLocation();
+        //this.button = document.querySelector('.resetButton');
+    }
+
+    render() {
+        ctx.font = '56px serif';
         ctx.fillText(this.symbol, this.x, this.y);
     }
     
@@ -510,11 +532,12 @@ class GameVariables {
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
         this.gameScore = new Score();
         this.resetButton = new ResetButton();
+        this.helpButton = new HelpButton();
         this.isPlayerMoveable = true;
     }
 
     loseGame() {
-        this.isPlayerMoveable = false;
+
         this.openModal('loss');
         // alert('You Lose');
         // this.allEnemies = [];
@@ -534,7 +557,7 @@ class GameVariables {
         // setTimeout( function displayWinModal() {
 
         // }
-        this.isPlayerMoveable = false;
+        
         this.openModal('win');
         // this.allEnemies = [];
         // this.allRocks = [];
@@ -550,6 +573,7 @@ class GameVariables {
     }
 
     openModal(theEvent = 'win') {
+        this.isPlayerMoveable = false;
     	const modal = document.querySelector('.modal');
     	modal.style.visibility = 'visible';
 
@@ -564,6 +588,10 @@ class GameVariables {
     	}
     	else if (theEvent === 'loss') {
             modal.firstChild.textContent = GameVariables.getLossMessage();
+        }
+
+        else if (theEvent === 'help') {
+            modal.firstChild.textContent = GameVariables.getHelpMessage();
         }
      //    const button = modal.childNodes[3];
 
@@ -755,10 +783,32 @@ setTimeout(function () {
         let boundingRect = canvas.getBoundingClientRect();
         const xLoc = event.clientX - boundingRect.left;
         const yLoc = event.clientY - boundingRect.top;
-        if (  xLoc >= 430 && xLoc <= 480) {
-            if (yLoc >= 625 && yLoc <= 675) {
+        // console.log(`Reset clicked at ${xLoc}, ${yLoc}`);
+       
+        if (  xLoc >= 425 && xLoc <= 485) {
+            if (yLoc >= 605 && yLoc <= 650) {
                 setTimeout(function() {
                     game.resetGame();
+                   // console.log(`Reset clicked at ${xLoc}, ${yLoc}`);
+                }, 100);
+               
+            }
+        }
+       
+    });
+
+   canvas.addEventListener('click', function setupHelpButton(event) {
+        let boundingRect = canvas.getBoundingClientRect();
+        const xLoc = event.clientX - boundingRect.left;
+        const yLoc = event.clientY - boundingRect.top;
+        // console.log(`Reset clicked at ${xLoc}, ${yLoc}`);
+        // console.log(`Help clicked at ${xLoc}, ${yLoc}`);
+        if (  xLoc >= 435 && xLoc <= 480) {
+            if (yLoc >= 660 && yLoc <= 705) {
+                setTimeout(function() {
+                    game.openModal('help');
+                   //alert('Help Clicked');
+                   // console.log(`Reset clicked at ${xLoc}, ${yLoc}`);
                 }, 100);
                
             }

@@ -179,6 +179,8 @@ var Engine = (function(global) {
         game.sidebar.render();
 
         game.resetButton.render();
+
+        game.helpButton.render();
         
         game.allHearts.forEach(function(heart) {
             heart.render();
