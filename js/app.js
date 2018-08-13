@@ -122,6 +122,7 @@ class Player {
     	this.x = 200;
     	this.y = 300;
     	this.alive = true;
+        this.toggleGameOn = true;
     }
     changeCharacter() {
         if (this.charNumber !== 4) {
@@ -151,9 +152,13 @@ class Player {
             }, 50);            
         } 
         if (this.y === -20) {
-            setTimeout( function gameWon() {
-                game.winGame();
+            if (this.toggleGameOn) {
+                setTimeout( function gameWon() {
+                    this.toggleGameOn = false;
+                    game.winGame();
             }, 0);
+            }
+            
            
         }
         // console.log(this.alive);
@@ -575,7 +580,7 @@ class GameVariables {
     openModal(theEvent = 'win') {
         this.isPlayerMoveable = false;
     	const modal = document.querySelector('.modal');
-    	modal.style.visibility = 'visible';
+    	modal.style.display = 'block';
 
         ///const textOfModal = modal.firstChild;
 
@@ -609,8 +614,12 @@ class GameVariables {
 
     closeModal() {
         const modal = document.querySelector('.modal');
-        modal.style.visibility = 'hidden';
-        this.resetGame();
+        modal.style.display = 'none';
+        if (modal.firstChild.textContent != GameVariables.getHelpMessage()) {
+            this.resetGame();
+        } else {
+            this.isPlayerMoveable = true;
+        }
     }
 
     resetGame() {
@@ -626,6 +635,7 @@ class GameVariables {
         // let heart3 = new Heart(2);
         this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
         this.gameScore.theScore = 0;
+        this.toggleGameOn = true;
     }
 
     static getHelpMessage() {

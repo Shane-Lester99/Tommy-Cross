@@ -34,7 +34,7 @@ h1 {
 
 .modal {
 	background-color: slategrey;
-	visibility: hidden;
+	display: none;
 	width: 100vw;
 	/*margin-right: auto;
 	margin-left: auto;*/
