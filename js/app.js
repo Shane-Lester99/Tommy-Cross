@@ -153,10 +153,10 @@ class Player {
         } 
         if (this.y === -20) {
             if (this.toggleRoundOn) {
+                this.toggleRoundOn = false;
                 setTimeout( function gameWon() {
-                    this.toggleRoundOn = false;
                     game.winGame();
-            }, 0);
+                }, 0);
             }
             
            
@@ -639,7 +639,7 @@ class GameVariables {
     resetGame() {
         this.isPlayerMoveable = true;
         this.allEnemies = [];
-        this.allRocks = [];
+        this.items.allRocks = [];
         this.player.x = 200;
         this.player.y = 300;
         this.items.glowStage.x = 200;
@@ -649,7 +649,7 @@ class GameVariables {
         // let heart3 = new Heart(2);
         this.sidebar.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
         this.sidebar.gameScore.theScore = 0;
-        this.toggleGameOn = true;
+        this.player.toggleRoundOn = true;
     }
 
     static getHelpMessage() {
