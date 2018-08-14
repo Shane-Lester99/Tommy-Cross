@@ -174,23 +174,15 @@ var Engine = (function(global) {
 
         game.player.render();
 
-        game.glowStage.render();
+        game.items.glowStage.render();
+
+        game.items.allRocks.forEach(function(rock) {
+            rock.render();
+        })
 
         game.sidebar.render();
 
-        game.resetButton.render();
-
-        game.helpButton.render();
         
-        game.allHearts.forEach(function(heart) {
-            heart.render();
-        });
-
-        game.gameScore.render();
-
-        game.allRocks.forEach(function(rock) {
-            rock.render();
-        })
     }
 
     /* This function does nothing but it could have been a good place to

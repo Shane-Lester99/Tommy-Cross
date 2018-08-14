@@ -122,7 +122,7 @@ class Player {
     	this.x = 200;
     	this.y = 300;
     	this.alive = true;
-        this.toggleGameOn = true;
+        this.toggleRoundOn = true;
     }
     changeCharacter() {
         if (this.charNumber !== 4) {
@@ -139,8 +139,8 @@ class Player {
                 this.y = 300;
                 if (this.alive === false) {
                     setTimeout( function popHeart() {
-                        game.allHearts.pop();
-                        if (game.allHearts.length === 0) {
+                        game.sidebar.allHearts.pop();
+                        if (game.sidebar.allHearts.length === 0) {
                             setTimeout( function endOfGame(){
                                 game.loseGame();
                             }, 300);
@@ -152,9 +152,9 @@ class Player {
             }, 50);            
         } 
         if (this.y === -20) {
-            if (this.toggleGameOn) {
+            if (this.toggleRoundOn) {
                 setTimeout( function gameWon() {
-                    this.toggleGameOn = false;
+                    this.toggleRoundOn = false;
                     game.winGame();
             }, 0);
             }
@@ -165,8 +165,8 @@ class Player {
         return;
     }
     render() {
-        if (game.glowStage.onGlowStage(this.x, this.y - 25)) {
-            game.gameScore.theScore += 1;
+        if (game.items.glowStage.onGlowStage(this.x, this.y - 25)) {
+            game.sidebar.gameScore.theScore += 1;
         }
     	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
@@ -248,10 +248,12 @@ class Player {
         else if (movement === 'enter') {
             this.changeCharacter();
         }
-        if (dontMove === false) {
+        if (dontMove === false) { 
             setTimeout(function stoneSpaceScore() {
+               // sound.pause();
+
                 if (game.player.y === 60 || game.player.y === 140 || game.player.y ===  220) {
-                    game.gameScore.theScore += 5;
+                    game.sidebar.gameScore.theScore += 5;
                 }
             }, 0);
         }
@@ -260,11 +262,13 @@ class Player {
 
 }
 
-class OtherItems {
+class Items {
     constructor() {
         // this.grassLocations = OtherItems.getGrassLocations();
         // this.stoneLocations = OtherItems.getStoneLocations();
         // this.waterLocations = OtherItems.getWaterLocations();
+        this.allRocks = [];   
+        this.glowStage = new GlowStage();
     }
 
     static getGrassLocations() {
@@ -280,21 +284,21 @@ class OtherItems {
 
     static getRandomLocationOf(squareType) {
         if (squareType === 'grass') {
-            const grassSquares = OtherItems.getGrassLocations();
+            const grassSquares = Items.getGrassLocations();
             const numberOfGrassSquares = 10;
             const randomizedIndex = Math.floor(Math.random() * numberOfGrassSquares);
             return grassSquares[randomizedIndex];
 
         }
         else if (squareType === 'stone') {
-            const stoneSquares = OtherItems.getStoneLocations();
+            const stoneSquares = Items.getStoneLocations();
             const numberOfStoneSquares = 15;
             const randomizedIndex = Math.floor(Math.random() * numberOfStoneSquares);
             return stoneSquares[randomizedIndex];
         }
 
         else if (squareType === 'water') {
-            const waterSquares = OtherItems.getWaterLocations();
+            const waterSquares = Items.getWaterLocations();
             const numberOfWaterSquares = 5;
             const randomizedIndex = Math.floor(Math.random() * numberOfWaterSquares);
             return waterSquares[randomizedIndex];
@@ -322,9 +326,9 @@ class OtherItems {
     }
 }
 
-class GlowStage extends OtherItems {
+class GlowStage {
     constructor(theLocation = [200,140]) {
-        super();
+        //super();
         this.sprite = 'images/Selector.png';
         this.x = theLocation[0];
         this.y = theLocation[1] - 25;
@@ -354,9 +358,9 @@ class GlowStage extends OtherItems {
     // }
 }
 
-class Rock extends OtherItems {
+class Rock {
     constructor(theLocation = [0,380]) {
-        super();
+        //super();
         this.sprite = 'images/Rock.png';
         this.x = theLocation[0];
         this.y = theLocation[1] - 20;
@@ -383,6 +387,10 @@ class Rock extends OtherItems {
 
 class Sidebar {
     constructor() { 
+        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
+        this.gameScore = new Score();
+        this.resetButton = new ResetButton();
+        this.helpButton = new HelpButton();
     }
    
     static heartLocations(number = 0) {
@@ -446,12 +454,22 @@ class Sidebar {
         ctx.moveTo(405, 600);
         ctx.lineTo(405, 710);
         ctx.stroke();
+
+        this.resetButton.render();
+
+        this.helpButton.render();
+        
+        this.allHearts.forEach(function(heart) {
+            heart.render();
+        });
+
+        this.gameScore.render();
     }
 }
 
-class ResetButton extends Sidebar {
+class ResetButton  {
     constructor() {
-        super();
+        //super();
         this.symbol = '⟲';
         [this.x, this.y] = Sidebar.resetButtonLocation();
         //this.button = document.querySelector('.resetButton');
@@ -464,9 +482,9 @@ class ResetButton extends Sidebar {
     
 }
 
-class HelpButton extends Sidebar {
+class HelpButton {
     constructor() {
-        super();
+        //super();
         this.symbol = '?';
         [this.x, this.y] = Sidebar.helpButtonLocation();
         //this.button = document.querySelector('.resetButton');
@@ -479,9 +497,9 @@ class HelpButton extends Sidebar {
     
 }
 
-class Heart extends Sidebar {
+class Heart {
     constructor(theLocation = 0) {
-        super();
+       // super();
         this.sprite = 'images/Heart.png';
         this.x = Sidebar.heartLocations(theLocation)[0];
         this.y = Sidebar.heartLocations(theLocation)[1];
@@ -494,9 +512,9 @@ class Heart extends Sidebar {
     }
 }
 
-class Score extends Sidebar {
+class Score  {
     constructor() {
-        super();
+        //super();
         this.theScore = 0;
         this.x = Sidebar.scoreLocation(0)[0];
         this.y = Sidebar.scoreLocation(0)[1];
@@ -527,17 +545,13 @@ class Score extends Sidebar {
 class GameVariables {
     constructor() {
         this.allEnemies = [];
-        this.allRocks = [];
         this.player = new Player();
-        this.glowStage = new GlowStage();
         this.sidebar = new Sidebar();
+        this.items = new Items();
         // let heart1 = new Heart(0);
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
-        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)];
-        this.gameScore = new Score();
-        this.resetButton = new ResetButton();
-        this.helpButton = new HelpButton();
+       
         this.isPlayerMoveable = true;
     }
 
@@ -588,7 +602,7 @@ class GameVariables {
        // buttonOfModal.innerHTML = 'continue';
         //modal.firstChild.innerHTML = 'Continue';
     	if (theEvent === 'win') {
-           modal.firstChild.textContent = GameVariables.getWinMessage(this.gameScore.theScore);
+           modal.firstChild.textContent = GameVariables.getWinMessage(this.sidebar.gameScore.theScore);
 
     	}
     	else if (theEvent === 'loss') {
@@ -628,13 +642,13 @@ class GameVariables {
         this.allRocks = [];
         this.player.x = 200;
         this.player.y = 300;
-        this.glowStage.x = 200;
-        this.glowStage.y = 140 - 25;
+        this.items.glowStage.x = 200;
+        this.items.glowStage.y = 140 - 25;
         // let heart1 = new Heart(0);
         // let heart2 = new Heart(1);
         // let heart3 = new Heart(2);
-        this.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
-        this.gameScore.theScore = 0;
+        this.sidebar.allHearts = [new Heart(0), new Heart(1), new Heart(2)]; 
+        this.sidebar.gameScore.theScore = 0;
         this.toggleGameOn = true;
     }
 
@@ -720,15 +734,15 @@ setInterval( function setEnemies() {
 //console.log(OtherItems.grassLocations);
 
 setInterval( function setRocks() {
-    let loc = OtherItems.getRandomLocationOf('grass');
+    let loc = Items.getRandomLocationOf('grass');
 
     let shouldWeSetRock = true;
     let playerLocation = game.player.getLocation();
 
     // Make only 6 rocks max appear in grass
-    if (game.allRocks.length >= 6) {
+    if (game.items.allRocks.length >= 6) {
         loc = OtherItems.getRandomLocationOf('water');
-        if (game.allRocks.length === 9) {
+        if (game.items.allRocks.length === 9) {
             shouldWeSetRock = false;
         }
     }
@@ -743,7 +757,7 @@ setInterval( function setRocks() {
     } 
 
     if (shouldWeSetRock) {
-        game.allRocks.forEach( function(item) {
+        game.items.allRocks.forEach( function(item) {
             if (item.isOccupied(loc[0], loc[1] - 20)) {
                 shouldWeSetRock = false;
             }            
@@ -752,15 +766,15 @@ setInterval( function setRocks() {
 
     if (shouldWeSetRock) {
         let newRock = new Rock(loc);
-        game.allRocks.push(newRock);
+        game.items.allRocks.push(newRock);
     }
 
 }, 10000); //10000
 
 setInterval( function setGlowStage() {
-    let loc = OtherItems.getRandomLocationOf('stone');
-    game.glowStage.x = loc[0];
-    game.glowStage.y = loc[1] - 25;
+    let loc = Items.getRandomLocationOf('stone');
+    game.items.glowStage.x = loc[0];
+    game.items.glowStage.y = loc[1] - 25;
 
 }, 5000); // 5000
 
@@ -775,7 +789,7 @@ document.addEventListener('keyup', function(e) {
         40: 'down'
      };
 
-    game.player.handleInput(allowedKeys[e.keyCode], game.allRocks, game.isPlayerMoveable);
+    game.player.handleInput(allowedKeys[e.keyCode], game.items.allRocks, game.isPlayerMoveable);
 
     //document.body.style = 'overflow:scroll';
 
