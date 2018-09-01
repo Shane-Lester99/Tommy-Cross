@@ -1,56 +1,114 @@
-// Enemies our player must avoid
+/*************************************************************************
+Title:       app.js
+
+Author:      Shane Lester
+
+Created on:  September 1st 2018
+
+Description: Creates objects for all items on the screen that are interactive.
+             These include enemies (bugs), rocks, player, switching players, 
+             the glow square, and the sidebar below the game screen. For 
+             more information on the game please refer to the README 
+             within this project.
+             
+ *************************************************************************/
+
+/**
+* @description Class that output enemy objects. These are represented as 
+* bugs on the screen.
+* @constructor Creates the object and assigns its current location (can
+* be one of three tiles), speed, and its icon image.
+* @param {Array} theLocation This is an array that contains the location
+* of the object. Its x coordinate is always -50, but its y can be 220, 140
+* or 60. These are the three tiles that the enemy location can occupy.
+* @param {Array} theSpeed This will assign how fast the enemy moves across the
+* field. The number 100 has no intrinsic value/ measurment, but it can be assumed
+* that it is standardized elsewhere in the program so it
+* runs the same across all browsers.
+*/
 class Enemy {
-    constructor(theLocation = [0,220] , theSpeed = 50) {
-        // Variables applied to each of our instances go here,
-        // we've provided one for you to get started
-
-        // The image/sprite for our enemies, this uses
-        // a helper we've provided to easily load images
+    constructor(theLocation = [-50,220] , theSpeed = 100) {
+        // Assigns the image sprite
         this.sprite = 'images/enemy-bug.png';
-
+        // Assigns the x and y location of the enemy
         this.x = theLocation[0];
-
         this.y = theLocation[1];
-
+        // Assigns the speed of the enemy. Can be from 100-400.
         this.speed = theSpeed;
-
+        // This is turned to true once the enemy object leaves the
+        // right side of the screen. Then the object will be deleted
+        // elsewhere in the program.
         this.offScreen = false;
-
     }
 
-    // Update the enemy's position, required method for game
-    // Parameter: dt, a time delta between ticks
+    /**
+    * @description Updates the position of the enemy object.
+    * @param {Number} dt This parameter standardizes movemenet to ensure
+    * the game runs at the same speed across all browsers
+    * @returns {Array} This array signifies the current square that the
+    * enemy is on standarized so it can be compared to other objects.
+    * Like for example, if the object is on an x location of 120, it will
+    * return 100 as the x location so it can be compared to the other game 
+    * objects which also have that as the game location.
+    */
     update(dt) {
-    // You should multiply any movement by the dt parameter
-    // which will ensure the game runs at the same speed for
-    // all computers.
-        if (this.x <= 505) { //505
+        // This will move the player across the screen as a function of 
+        // the speed, the current x location, and the dt paramater
+        if (this.x <= 505) {
             this.x += dt * this.speed;
         }
+        // If the object is off the screen, update this member variable
+        // so it is known this object is no longer usable
         else {
             this.offScreen = true;
         }
+        // Returns a reference point to the current square to be compared
+        // to other game objects. 
         return this.findSquare();
-                //console.log(this.findSquare());
-
     };
 
-    // Draw the enemy on the screen, required method for game
+    /**
+    * @description Draw the enemy on the screen, required method for game
+    */
     render() {
+        // Will only render the object if it is still onscreen
         if (this.x <= 505) {
+        // This will draw the image sprite to the correct location on the
+        // canvas.
          ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
         }
     };
 
+    /**
+    * @description Returns the exact location of the enemy object on the 
+    * canvas element
+    * @returns {Array} This function returns the exact location of the
+    * enemy object. Note that this is nonstardized, so it cant be compared
+    * to other game objects with any degree of accuracy
+    */
     getRawLocation() {
+        // Create an array thats empty.
     	const location = [];
+        // Push the x and y location as is onto the array
     	location.push(this.x);
     	location.push(this.y);
+
+        // Return the array
     	return location;
     }
 
+    /**
+    * @description This function will return the location of the enemy object
+    * standardized to be compared to other game objects.
+    * @returns {Array} Will return the standardized x and y location. Although note
+    * that the y comes standardized before this function is called (becaue it is discrete
+    * (can only be 3 values) while the x location is continuous)
+    */ 
     findSquare() {
+        // Get the non stardized location of the object
         let location = this.getRawLocation();
+        // Standardize the x location based on the range that the continuous
+        // x value is on. 
         if (this.x >= 0 && this.x < 60) {
             location[0] = 0;
         }
@@ -69,61 +127,67 @@ class Enemy {
         return location;
     }
 
+    /**
+    * @description Static function to return the three possible starting locations of any 
+    * enemy object. Used to initialize the enemy object with a random value.
+    * @param {Array} locNum This is the location number. 0 is the bottom stone tile, 1 is 
+    * the stone tile directly above it and any other number is for the top stone tile. 
+    * @returns {Array} Will return the standardized x and y location. Although note
+    * that the y comes standardized before this function is called (becaue it is discrete
+    * (can only be 3 values) while the x location is continuous)
+    */ 
     static chooseLocation(locNum) {
+        // Create an empty array that represents the objects location
         let location = [];
-        // Bottom Square
+        // If 0 is the parameter, choose the bottom stone tile
         if (locNum === 0) {
             location = [-50,220];
         } 
-        // Middle Square
+        // If 1, choose the middle stone tile
         else if (locNum === 1) {
             location = [-50,140];
         }
-        // Top Square
+        // If 2, choose the top stone tile
         else {
             location = [-50,60];
         }
+        // We return the location specified in the parameter
         return location;
     };
 
+    /**
+    * @description This function will choose a random discrete speed from 100 - 400.
+    */
     static randomSpeed() {
         return Math.floor(Math.random() * 301 + 100);
     }
 };
-// var Enemy = function() {
-//     // Variables applied to each of our instances go here,
-//     // we've provided one for you to get started
 
-//     // The image/sprite for our enemies, this uses
-//     // a helper we've provided to easily load images
-//     this.sprite = 'images/enemy-bug.png';
-// };
-
-// // Update the enemy's position, required method for game
-// // Parameter: dt, a time delta between ticks
-// Enemy.prototype.update = function(dt) {
-//     // You should multiply any movement by the dt parameter
-//     // which will ensure the game runs at the same speed for
-//     // all computers.
-// };
-
-// // Draw the enemy on the screen, required method for game
-// Enemy.prototype.render = function() {
-//     ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-// };
-// Now write your own player class
-// This class requires an update(), render() and
-// a handleInput() method.
+/**
+* @description This class creates the Player object. This is the single movable character
+* on the screen.
+* @constructor Chooses all the possible character sprites, initializes it to the boy (Tommy Cross)
+* and marks his initial location. 
+*/
 class Player {
     constructor() {
+        // This is the array that contains all the possible characters. 
         this.allChar = ['images/char-boy.png', 'images/char-cat-girl.png', 'images/char-horn-girl.png', 'images/char-pink-girl.png', 'images/char-princess-girl.png'];
+        // This marks an index value to signify which character we will use
         this.charNumber = 0;
+        // Initialize the image to the boy (Tommy Cross)
     	this.sprite = 'images/char-boy.png';
+        // Choose his initial square in which he spawns
     	this.x = 200;
     	this.y = 300;
+        // This signifies if he is still around for the current turn
     	this.alive = true;
+        // This signifies when the turn ends or not
         this.toggleRoundOn = true;
     }
+    /**
+    * @description: 
+    */
     changeCharacter() {
         if (this.charNumber !== 4) {
             this.charNumber++;
