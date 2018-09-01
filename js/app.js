@@ -182,6 +182,15 @@ class Player {
         if (playerMovable === false) {
             return;
         }
+        let isInputValid = false;
+        ['left','right','down','up','enter'].forEach( function checkInput(validMove) {
+            if (movement === validMove) {
+                isInputValid = true;
+            }
+        });
+        if (isInputValid === false) {
+            return;
+        }
         let dontMove = false;
     	if (movement === 'left') {
     		if (this.x !== 0) {
@@ -247,6 +256,7 @@ class Player {
     	}
         else if (movement === 'enter') {
             this.changeCharacter();
+            return;
         }
         if (dontMove === false) { 
             setTimeout(function stoneSpaceScore() {
