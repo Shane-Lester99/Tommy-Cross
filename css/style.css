@@ -93,7 +93,7 @@ This places a margin for the win and loss screen so they are closer
 to the center of the modal
 */
 .game-end {
-	margin-top: 40%;
+	margin-top: 200px;
 }
 
 /* This effects the 'continue' button in the modal screen */
