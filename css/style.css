@@ -16,8 +16,6 @@ html, body {
 	width: 100%;
 }
 
-
-
 body {
     text-align: center;
     background-color: lightslategrey;
@@ -39,9 +37,6 @@ h1 {
 	background-color: slategrey;
 }
 
-
-
-
 /*Contains the information for the game modals. These include
 The help menu, the win message and the loss message*/
 .modal {
@@ -51,8 +46,7 @@ The help menu, the win message and the loss message*/
 	z-index: 100;
 	opacity: 0.95;
 	position: fixed;
-/*	font-family:  Arial, Helvetica, sans-serif;
-*/	top: 0;
+	top: 0;
 	left: 0;
 	height: 100vh;
 	font-family:  Arial, Helvetica, sans-serif;
@@ -60,46 +54,49 @@ The help menu, the win message and the loss message*/
 	height: 100%;
 }
 
+/* The div element that contains all the information for the modals */
 .modal-text {
 	margin-right: auto;
 	margin-left: auto;
-	/*font-family:  Arial, Helvetica, sans-serif;
-	overflow: scroll;
-	height: 100%;*/
 	max-width: 60vw;
 }
 
+/* This effects the words of the help menu */
 .help-menu-description {
 	font-size: 2vw;
 }
 
-.help-game-description {
-	
-}
-
+/* This effects the title of the help menu */
 .help-title {
 	font-size: 6vw;
 	font-family:  Arial, Helvetica, sans-serif;
 	margin-bottom: -1vw;
 }
 
+/* This effects the words of the win and losee menu*/
 .win-description, .loss-descripiton {
 	font-size: 3vw;
-	/*font-family:  Arial, Helvetica, sans-serif;*/
 }
 
+/* This effects the words 'You Win' and 'You Lose' */
 .win-message, .loss-message {
 	font-size: 6vw;
 }
 
+/* This sizes the emojis on the win and loss menus*/
 .emojis {
 	font-size: 5vw;
 }
 
+/* 
+This places a margin for the win and loss screen so they are closer
+to the center of the modal
+*/
 .game-end {
 	margin-top: 40%;
 }
 
+/* This effects the 'continue' button in the modal screen */
 .modal-button {
 	border-radius: 10000px;
 	background-color: black;
@@ -107,4 +104,3 @@ The help menu, the win message and the loss message*/
 	color: white;
 	margin-bottom: 10%;
 }
-

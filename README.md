@@ -68,4 +68,8 @@ part of Frogger and made a playable game out of it, which I am very proud of.
 
 ##Created by:
 
-Created by Shane Lester on September 6th 2018
+- Created by Shane Lester in collaboration with Udacity.com
+
+- Udacity.com provided the visual assets and the engine.js/ resources.js files. Everything else was built by me from near scratch (was provided with a mostly empty index.html, css, and app.js file) to build the game.
+
+- Also the initial inspiration for the project came from Udacity.com
