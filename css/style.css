@@ -83,6 +83,23 @@ The help menu, the win message and the loss message*/
 	margin-bottom: -1vw;
 }
 
+.win-description, .loss-descripiton {
+	font-size: 3vw;
+	/*font-family:  Arial, Helvetica, sans-serif;*/
+}
+
+.win-message, .loss-message {
+	font-size: 6vw;
+}
+
+.emojis {
+	font-size: 5vw;
+}
+
+.game-end {
+	margin-top: 40%;
+}
+
 .modal-button {
 	border-radius: 10000px;
 	background-color: black;

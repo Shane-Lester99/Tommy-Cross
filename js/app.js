@@ -773,12 +773,14 @@ class GameVariables {
     }
 
     static getWinMessage(score = 0) {
-    	return `You Win with score ${score}`;
+    	return `<aside class="win-description game-end"> <p> <span class="win-message"> 
+        You win! </span> <br>  <span class='emojis'> 😎 😎 </span> <br> With a score of ${score}! <br> Good job!</p> </aside>`;
 
     }
 
     static getLossMessage() {
-    	return 'You Lose!'
+        return `<aside class="loss-description game-end"> <p> <span class="loss-message"> 
+        You Lose! </span> <br> <span class='emojis'> 😵 😵 </span> <br> Better luck next time! </p> </aside>`
     }
 }
 
