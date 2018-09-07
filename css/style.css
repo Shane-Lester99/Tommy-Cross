@@ -16,6 +16,8 @@ html, body {
 	width: 100%;
 }
 
+
+
 body {
     text-align: center;
     background-color: lightslategrey;
@@ -38,6 +40,8 @@ h1 {
 }
 
 
+
+
 /*Contains the information for the game modals. These include
 The help menu, the win message and the loss message*/
 .modal {
@@ -47,7 +51,43 @@ The help menu, the win message and the loss message*/
 	z-index: 100;
 	opacity: 0.95;
 	position: fixed;
-	top: 0;
+/*	font-family:  Arial, Helvetica, sans-serif;
+*/	top: 0;
 	left: 0;
 	height: 100vh;
+	font-family:  Arial, Helvetica, sans-serif;
+	overflow: scroll;
+	height: 100%;
 }
+
+.modal-text {
+	margin-right: auto;
+	margin-left: auto;
+	/*font-family:  Arial, Helvetica, sans-serif;
+	overflow: scroll;
+	height: 100%;*/
+	max-width: 60vw;
+}
+
+.help-menu-description {
+	font-size: 2vw;
+}
+
+.help-game-description {
+	
+}
+
+.help-title {
+	font-size: 6vw;
+	font-family:  Arial, Helvetica, sans-serif;
+	margin-bottom: -1vw;
+}
+
+.modal-button {
+	border-radius: 10000px;
+	background-color: black;
+	font-size: 2vw;
+	color: white;
+	margin-bottom: 10%;
+}
+

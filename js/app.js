@@ -618,6 +618,7 @@ class Score  {
 
 class GameVariables {
     constructor() {
+        this.modalOpened = 'none';
         this.allEnemies = [];
         this.player = new Player();
         this.sidebar = new Sidebar();
@@ -676,15 +677,20 @@ class GameVariables {
        // buttonOfModal.innerHTML = 'continue';
         //modal.firstChild.innerHTML = 'Continue';
     	if (theEvent === 'win') {
-           modal.firstChild.textContent = GameVariables.getWinMessage(this.sidebar.gameScore.theScore);
+            this.modalOpened = 'win';
+           modal.childNodes[1].childNodes[1].innerHTML = GameVariables.getWinMessage(this.sidebar.gameScore.theScore);
 
     	}
     	else if (theEvent === 'loss') {
-            modal.firstChild.textContent = GameVariables.getLossMessage();
+            this.modalOpened = 'loss';
+            modal.childNodes[1].childNodes[1].innerHTML = GameVariables.getLossMessage();
         }
 
         else if (theEvent === 'help') {
-            modal.firstChild.textContent = GameVariables.getHelpMessage();
+            this.modalOpened = 'help';
+            // const saveButton = modal.childNodes[1].innerHTML;
+            modal.childNodes[1].childNodes[1].innerHTML = GameVariables.getHelpMessage();
+            // alert(modal.childNodes[1])
         }
      //    const button = modal.childNodes[3];
 
@@ -702,12 +708,15 @@ class GameVariables {
 
     closeModal() {
         const modal = document.querySelector('.modal');
+        modal.childNodes[1].childNodes[1].innerHTML = '';
         modal.style.display = 'none';
-        if (modal.firstChild.textContent != GameVariables.getHelpMessage()) {
+        // alert(modal.childNodes[1].childNodes[1].innerHTML /*+ '<br>' + GameVariables.getHelpMessage()*/)
+        if (this.modalOpened !== 'help') {
             this.resetGame();
         } else {
             this.isPlayerMoveable = true;
         }
+        this.modalOpened = 'none';
     }
 
     resetGame() {
@@ -727,7 +736,40 @@ class GameVariables {
     }
 
     static getHelpMessage() {
-    	return 'Lets Help!';
+        const message = '<aside class="help-menu-description"> <h1 class="help-title">Help:</h1> <h2 class="help-title-game">Game Description:</h2>' +
+        `<div class='help-game-description> <p>Tommy Cross is the main character in the game and he needs to cross the road to reach the
+        water safely.
+        He spawns in the beginning of the game on safe grass tiles and has to cross the stone tiles to reach the water. 
+        The stone tiles, however, are very dangerous for Tommy, because there are bugs moving at various speeds. 
+        If Tommy collides with one of these bugs, he loses a 'life'. If he loses all three of his 'lives', the game ends 
+        and he wont be able to go swimming (in other words, the user loses the game)! </p>` + 
+
+        '<p>However, although the stone tiles are dangerous, they are also an incentive to spend time on them.' + 
+        'Everytime he lands on a stone tile safely, he earns five points. If he lands on a special, glowing tile,' +
+        ' he will gaina constant stream of points for however long he is on it safely. The goal of the game is to' +
+        'reach the water and get the most possible points!</p>' +
+
+        '<p>As gametime is elapsed, the game progressively gets harder. It gets harder because Tommy can safely walk on the grass'+
+        'spaces to avoid the nasty bugs. However, a landslade occurs at random intervals, making some grass and water squares'+
+        'unusable because a boulder has landed there. Although dont worry too much Tommy will remain safe from the landslide,'+
+        'because they cant land on him. But they do make his life more inconvenient</p>' +
+        '<p>So be careful, have fun, and help Tommy reach the end! </p> </div> </aside>' +
+
+        '<aside class="help-menu-how-to-play"> <h2>How To Play:</h2>' +
+
+            '<p> - Use the ```arrow``` keys to move Tommy Cross across the board.</p>' +
+
+            '<p> - Use the ```enter``` key to change characters.</p>' +
+
+            '<p> - Click ```?``` button to get instructions on how to play.</p>' +
+
+            '<p> - Click reset button to reset gameplay.</p>' +
+
+            // '<button class="modal-button">  Continue </button>' +
+            
+
+        '</aside>';
+    	return message;
     }
 
     static getWinMessage(score = 0) {
@@ -815,7 +857,7 @@ setInterval( function setRocks() {
 
     // Make only 6 rocks max appear in grass
     if (game.items.allRocks.length >= 6) {
-        loc = OtherItems.getRandomLocationOf('water');
+        loc = Items.getRandomLocationOf('water');
         if (game.items.allRocks.length === 9) {
             shouldWeSetRock = false;
         }
@@ -919,8 +961,9 @@ setTimeout(function () {
 function continueButtonClicked(event) {
     event.preventDefault();
     game.closeModal();
-
 }
 
-document.querySelector('.modal-button').addEventListener('click', continueButtonClicked);
+const continueEvent = document.querySelector('.modal-button').addEventListener('click', continueButtonClicked);
+
+
     
