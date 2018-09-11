@@ -29,27 +29,27 @@ unusable because a boulder has landed there. Although dont worry too much Tommy 
 
 So be careful, have fun, and help Tommy reach the end! 
 
-##Purpose:     
+## Purpose:     
 To create a Frogger-like arcade game that I believe creates a fun and refreshingly new user experience. Although
 Frogger has always been one of my favorite arcade games, I always enjoyed the part where you get to cross the road
 rather then deal with various other situations (like going on logs/alligators and other things). This game allows 
 the user to only cross the road, and stay on the road, and earn as many points as possible. This took my favorite 
 part of Frogger and made a playable game out of it, which I am very proud of.
 
-##Browsers Supported:
+## Browsers Supported:
 
 - Tested on:
 	- Google Chrome 
 	- Safari
 
 - Note:
-	- Not yet playable on touch devices. This application currently is only playable via keyboard input.
+	- Not playable on touch devices. This application currently is only playable via keyboard input.
 
-##How To Open the game
+## How To Open the game
 
 - Playable online at _____
 
-##How To Play:   
+## How To Play:   
 
 - Use the ```arrow``` keys to move Tommy Cross across the board.
 
@@ -62,11 +62,11 @@ part of Frogger and made a playable game out of it, which I am very proud of.
 - Dodge bugs, get points, and enjoy the game!
 
 
-##Build:
+## Build:
 - Use git clone on command line to clone this repository.
 - Open the index.html in browser of choice. 
 
-##Created by:
+## Created by:
 
 - Created by Shane Lester in collaboration with Udacity.com
 
