@@ -944,7 +944,9 @@ class GameVariables {
 
             '<p> - Click the button labelled "?" in the sidebar to display this help menu.</p>' +
 
-            '<p> - Click the button labelled "⟲" in the sidebar to reset gameplay.</p>' +            
+            '<p> - Click the button labelled "⟲" in the sidebar to reset gameplay.</p>' + 
+
+            '<p> - Lastly, note that this game is not yet playable on touch devices. Will be with some future update! </p>' +           
 
         '</aside>'
     	return message;
