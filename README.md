@@ -8,6 +8,7 @@
 * [Browsers Supported](#browsers-supported)
 * [How To Play](#how-to-play)
 * [Build](#build)
+* [Possible Future Updates](#possible-future-updates)
 * [Created By](#created-by)
 
 ## Description: 
@@ -72,6 +73,20 @@ part of Frogger and made a playable game out of it, which I am very proud of.
 ## Build:
 - Use git clone on command line to clone this repository.
 - Open the index.html in browser of choice. 
+
+## Possible Future Updates
+
+- Would like to optimize the js, as there is some bottlenecks in the code that impede performance. There performance issues dont interfere with the game much (as it still plays well) or the UX, but it makes it so other features (like audio or touch enabled) greatly effect the performance negatively
+
+- Would like to add audio upon getting points or winning/ losing
+
+- Would like to add touch screen playability. Currently this game cannot be played on a touch device. 
+
+- would like to package this application as a cross platform mobile application for IOS/ Android
+
+- Would like to add a leaderboard in the game
+
+- Would like to add additional levels to the game
 
 ## Created by:
 
