@@ -4,6 +4,7 @@
 
 * [Description](#description)
 * [Purpose](#purpose)
+* [Contributions](#contributions)
 * [Browsers Supported](#browsers-supported)
 * [How To Play](#how-to-play)
 * [Build](#build)
@@ -35,6 +36,12 @@ Frogger has always been one of my favorite arcade games, I always enjoyed the pa
 rather then deal with various other situations (like going on logs/alligators and other things). This game allows 
 the user to only cross the road, and stay on the road, and earn as many points as possible. This took my favorite 
 part of Frogger and made a playable game out of it, which I am very proud of.
+
+## Contributions
+
+- Udacity.com provided the visual assets and the engine.js/ resources.js files. Everything else was built by me from near scratch (was provided with a mostly empty index.html, css, and app.js file) to build the game.
+
+- Also the initial inspiration for the project came from Udacity.com. They came up with the idea of creating a frigger like game and created the assets and a basic design of how the game should look.
 
 ## Browsers Supported:
 
@@ -69,7 +76,3 @@ part of Frogger and made a playable game out of it, which I am very proud of.
 ## Created by:
 
 - Created by Shane Lester in collaboration with Udacity.com
-
-- Udacity.com provided the visual assets and the engine.js/ resources.js files. Everything else was built by me from near scratch (was provided with a mostly empty index.html, css, and app.js file) to build the game.
-
-- Also the initial inspiration for the project came from Udacity.com
