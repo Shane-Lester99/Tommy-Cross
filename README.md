@@ -6,6 +6,7 @@
 * [Purpose](#purpose)
 * [Contributions](#contributions)
 * [Browsers Supported](#browsers-supported)
+* [How to open the game](#how-to-open-the-game)
 * [How To Play](#how-to-play)
 * [Build](#build)
 * [Possible Future Updates](#possible-future-updates)
@@ -55,7 +56,7 @@ part of Frogger and made a playable game out of it, which I am very proud of.
 
 ## How To Open the game
 
-- Playable online at _____
+- Playable online at https://shane-lester99.github.io/Tommy-Cross/index.html
 
 ## How To Play:   
 
