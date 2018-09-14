@@ -56,7 +56,7 @@ part of Frogger and made a playable game out of it, which I am very proud of.
 
 ### How To Open the game
 
-- Playable online at https://shane-lester99.github.io/Tommy-Cross/index.html
+- Playable online [here](https://shane-lester99.github.io/Tommy-Cross/index.html)
 
 ### How To Play:   
 
